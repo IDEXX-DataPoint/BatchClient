@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPointBatchClient", "DataPointBatchClient\DataPointBatchClient.csproj", "{948F42C1-F533-4E46-A5BC-AB2FA626ED05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPointBatchClientTests", "DataPointBatchClientTests\DataPointBatchClientTests.csproj", "{D3F408D4-8676-4B9B-8409-273B54B8EB86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{948F42C1-F533-4E46-A5BC-AB2FA626ED05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{948F42C1-F533-4E46-A5BC-AB2FA626ED05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{948F42C1-F533-4E46-A5BC-AB2FA626ED05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3F408D4-8676-4B9B-8409-273B54B8EB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3F408D4-8676-4B9B-8409-273B54B8EB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3F408D4-8676-4B9B-8409-273B54B8EB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3F408D4-8676-4B9B-8409-273B54B8EB86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

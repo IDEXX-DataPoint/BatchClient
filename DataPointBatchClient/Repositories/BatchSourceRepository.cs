@@ -20,10 +20,10 @@ namespace DataPointBatchClient.Repositories
             var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request);
             return response.Data.value;
         }
+    }
 
-        public class BatchResponse<T>
-        {
-            public IEnumerable<T> value { get; set; }
-        }
+    public class BatchResponse<T>
+    {
+        public IEnumerable<T> value { get; set; }
     }
 }

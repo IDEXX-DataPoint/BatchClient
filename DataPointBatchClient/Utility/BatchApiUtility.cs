@@ -1,5 +1,4 @@
-﻿using DataPointBatchClient.Models;
-using RestSharp;
+﻿using RestSharp;
 
 namespace DataPointBatchClient.Utility
 {
@@ -41,7 +40,12 @@ namespace DataPointBatchClient.Utility
             request.AddParameter("username", Properties.Settings.Default.Username);
             request.AddParameter("password", Properties.Settings.Default.Password);
 
-            return Client.Execute<TokenResponse>(request).Data.access_token;
+            return Client.Execute<Token>(request).Data.access_token;
         }
+    }
+
+    public class Token
+    {
+        public string access_token { get; set; }
     }
 }

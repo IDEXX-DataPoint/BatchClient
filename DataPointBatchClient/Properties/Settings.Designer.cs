@@ -38,6 +38,15 @@ namespace DataPointBatchClient.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Password {
+            get {
+                return ((string)(this["Password"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));
@@ -56,9 +65,9 @@ namespace DataPointBatchClient.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Password {
+        public string SiteId {
             get {
-                return ((string)(this["Password"]));
+                return ((string)(this["SiteId"]));
             }
         }
     }

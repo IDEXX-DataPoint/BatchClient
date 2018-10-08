@@ -13,13 +13,16 @@
   </startup>
   <applicationSettings>
     <DataPointBatchClient.Properties.Settings>
+      <setting name="Password" serializeAs="String">
+        <value />
+      </setting>
       <setting name="ConnectionString" serializeAs="String">
         <value />
       </setting>
       <setting name="Username" serializeAs="String">
         <value />
       </setting>
-      <setting name="Password" serializeAs="String">
+      <setting name="SiteId" serializeAs="String">
         <value />
       </setting>
     </DataPointBatchClient.Properties.Settings>

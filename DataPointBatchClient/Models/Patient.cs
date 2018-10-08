@@ -17,7 +17,7 @@ namespace DataPointBatchClient.Models
         public DateTime? dateOfBirth { get; set; }
         public bool? spayedOrNeutered { get; set; }
         public bool? inactive { get; set; }
-        public string weight { get; set; }
+        public double? weight { get; set; }
         public string weightUnit { get; set; }
         public string weightUnitDescription { get; set; }
         public string rabiesTag { get; set; }
@@ -34,7 +34,7 @@ namespace DataPointBatchClient.Models
         public DateTime? syncDate { get; set; }
         public Guid? correlationId { get; set; }
         public Guid? lastModifiedByCorrelationId { get; set; }
-        public int? generation { get; set; }
+        public double? generation { get; set; }
         public bool? deleted { get; set; }
     }
 }

@@ -2,28 +2,28 @@
 
 namespace DataPointBatchClient.Repositories
 {
-    public class AppointmentRepository : BatchSourceRepository<Appointment>
+    public class AppointmentSourceRepository : BatchSourceRepository<Appointment>
     {
         private static string Resource { get; } = "odata/Appointments";
-        public AppointmentRepository() : base(Resource) { }
+        public AppointmentSourceRepository() : base(Resource) { }
     }
 
-    public class ClientRepository : BatchSourceRepository<Client>
+    public class ClientSourceRepository : BatchSourceRepository<Client>
     {
         private static string Resource { get; } = "odata/Clients";
-        public ClientRepository() : base(Resource) { }
+        public ClientSourceRepository() : base(Resource) { }
     }
 
-    public class CodeRepository : BatchSourceRepository<Code>
+    public class CodeSourceRepository : BatchSourceRepository<Code>
     {
         private static string Resource { get; } = "odata/Codes";
-        public CodeRepository() : base(Resource) { }
+        public CodeSourceRepository() : base(Resource) { }
     }
 
-    public class InvoiceRepository : BatchSourceRepository<Invoice>
+    public class InvoiceSourceRepository : BatchSourceRepository<Invoice>
     {
         private static string Resource { get; } = "odata/Invoices";
-        public InvoiceRepository() : base(Resource) { }
+        public InvoiceSourceRepository() : base(Resource) { }
     }
 
     public class PatientSourceRepository : BatchSourceRepository<Patient>
@@ -32,27 +32,27 @@ namespace DataPointBatchClient.Repositories
         public PatientSourceRepository() : base(Resource) { }
     }
 
-    public class PrescriptionRepository : BatchSourceRepository<Prescription>
+    public class PrescriptionSourceRepository : BatchSourceRepository<Prescription>
     {
         private static string Resource { get; } = "odata/Prescriptions";
-        public PrescriptionRepository() : base(Resource) { }
+        public PrescriptionSourceRepository() : base(Resource) { }
     }
 
-    public class ReminderRepository : BatchSourceRepository<Reminder>
+    public class ReminderSourceRepository : BatchSourceRepository<Reminder>
     {
         private static string Resource { get; } = "odata/Reminders";
-        public ReminderRepository() : base(Resource) { }
+        public ReminderSourceRepository() : base(Resource) { }
     }
 
-    public class ResourceRepository : BatchSourceRepository<Resource>
+    public class ResourceSourceRepository : BatchSourceRepository<Resource>
     {
         private static string Resource { get; } = "odata/Resources";
-        public ResourceRepository() : base(Resource) { }
+        public ResourceSourceRepository() : base(Resource) { }
     }
 
-    public class TransactionRepository : BatchSourceRepository<Transaction>
+    public class TransactionSourceRepository : BatchSourceRepository<Transaction>
     {
         private static string Resource { get; } = "odata/Transactions";
-        public TransactionRepository() : base(Resource) { }
+        public TransactionSourceRepository() : base(Resource) { }
     }
 }

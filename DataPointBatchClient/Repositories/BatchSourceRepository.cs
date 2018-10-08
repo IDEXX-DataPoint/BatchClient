@@ -12,11 +12,28 @@ namespace DataPointBatchClient.Repositories
 
     public abstract class BatchSourceRepository<T> : IBatchSourceRepository<T>
     {
-        public abstract RestRequest RestRequest(int skip);
+        private readonly string _resource;
+
+        protected BatchSourceRepository(string resource)
+        {
+            _resource = resource;
+        }
+
+        private RestRequest GetRequest(int skip)
+        {
+            var request = new RestRequest(_resource);
+
+            request.AddHeader("Authorization", $"Bearer {BatchApiUtility.Token}");
+            request.AddParameter("$filter", BatchApiUtility.Filter);
+            request.AddParameter("$top", BatchApiUtility.Top);
+            request.AddParameter("$skip", skip);
+
+            return request;
+        }
 
         public async Task<IEnumerable<T>> GetBatchItems(int skip = 0)
         {
-            var request = RestRequest(skip);
+            var request = GetRequest(skip);
             var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request);
             return response.Data.value;
         }

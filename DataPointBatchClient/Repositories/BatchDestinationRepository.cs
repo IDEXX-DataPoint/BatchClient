@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Dapper;
+using DataPointBatchClient.Utility;
 
 namespace DataPointBatchClient.Repositories
 {
@@ -14,9 +15,9 @@ namespace DataPointBatchClient.Repositories
     {
         protected string Query;
 
-        protected BatchDestinationRepository(string query)
+        protected BatchDestinationRepository(string resourcePath)
         {
-            Query = query;
+            Query = EmbeddedResource.Get(resourcePath);
         }
 
         public void MergeEntities(IEnumerable<T> entities)

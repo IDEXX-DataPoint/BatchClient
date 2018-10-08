@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DataPointBatchClient.Repositories;
@@ -17,17 +18,32 @@ namespace DataPointBatchClient
     {
         public void Start()
         {
+            var startTime = GetStartTime();
+
+            RunAsync();
+
+            // todo only if all successful
+            Properties.Settings.Default.LastUpdated = startTime;
+        }
+
+        private static string GetStartTime()
+        {
+            return DateTime.UtcNow.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'");
+        }
+
+        private static void RunAsync()
+        {
             var tasks = new[]
             {
-                //Process(new AppointmentRepository(), new AppointmentDestinationRepository()),
-                //Process(new ClientRepository(), new ClientDestinationRepository()),
-                //Process(new CodeRepository(), new CodeDestinationRepository()),
-                //Process(new InvoiceRepository(), new InvoiceDestinationRepository()),
+                Process(new AppointmentRepository(), new AppointmentDestinationRepository()),
+                Process(new ClientRepository(), new ClientDestinationRepository()),
+                Process(new CodeRepository(), new CodeDestinationRepository()),
+                Process(new InvoiceRepository(), new InvoiceDestinationRepository()),
                 Process(new PatientSourceRepository(), new PatientDestinationRepository()),
-                //Process(new PrescriptionRepository(), new PrescriptionDestinationRepository()),
-                //Process(new ReminderRepository(), new ReminderDestinationRepository()),
-                //Process(new ResourceRepository(), new ResourceDestinationRepository()),
-                //Process(new TransactionRepository(), new TransactionDestinationRepository()),
+                Process(new PrescriptionRepository(), new PrescriptionDestinationRepository()),
+                Process(new ReminderRepository(), new ReminderDestinationRepository()),
+                Process(new ResourceRepository(), new ResourceDestinationRepository()),
+                Process(new TransactionRepository(), new TransactionDestinationRepository()),
             };
             Task.WaitAll(tasks);
         }
@@ -36,6 +52,8 @@ namespace DataPointBatchClient
         {
             int count;
             var processed = 0;
+
+            // todo get then update Settings.LastUpdated
 
             do
             {

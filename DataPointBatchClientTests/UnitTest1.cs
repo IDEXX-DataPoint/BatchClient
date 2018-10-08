@@ -10,7 +10,7 @@ namespace DataPointBatchClientTests
         public void BatchApiUtility_RetrieveToken()
         {
             // todo link or copy app.config
-            Assert.AreNotEqual(BatchApiUtility.Token, null);
+            Assert.AreNotEqual(BatchApiUtility.Authorization, "Bearer ");
         }
 
         [TestMethod]

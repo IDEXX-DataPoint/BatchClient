@@ -23,7 +23,7 @@ namespace DataPointBatchClient.Repositories
         {
             var request = new RestRequest(_resource);
 
-            request.AddHeader("Authorization", $"Bearer {BatchApiUtility.Token}");
+            request.AddHeader("Authorization", BatchApiUtility.Authorization);
             request.AddParameter("$filter", BatchApiUtility.Filter);
             request.AddParameter("$top", BatchApiUtility.Top);
             request.AddParameter("$skip", skip);

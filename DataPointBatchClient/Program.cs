@@ -1,21 +1,52 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using DataPointBatchClient.Repositories;
+using DataPointBatchClient.Utility;
 
 namespace DataPointBatchClient
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
+            new BatchProcessAsync().Start();
+        }
+    }
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+    public class BatchProcessAsync
+    {
+        public void Start()
+        {
+            var tasks = new[]
+            {
+                //Process(new AppointmentRepository(), new AppointmentDestinationRepository()),
+                //Process(new ClientRepository(), new ClientDestinationRepository()),
+                //Process(new CodeRepository(), new CodeDestinationRepository()),
+                //Process(new InvoiceRepository(), new InvoiceDestinationRepository()),
+                Process(new PatientSourceRepository(), new PatientDestinationRepository()),
+                //Process(new PrescriptionRepository(), new PrescriptionDestinationRepository()),
+                //Process(new ReminderRepository(), new ReminderDestinationRepository()),
+                //Process(new ResourceRepository(), new ResourceDestinationRepository()),
+                //Process(new TransactionRepository(), new TransactionDestinationRepository()),
+            };
+            Task.WaitAll(tasks);
+        }
+
+        private static async Task Process<TEntity>(IBatchSourceRepository<TEntity> sourceSourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
+        {
+            int count;
+            var processed = 0;
+
+            do
+            {
+                var skip = processed;
+                var items = await sourceSourceRepository.GetBatchItems(skip);
+                destinationRepository.MergeEntities(items);
+
+                count = items.Count();
+                processed += count;
+
+            } while (count == BatchApiUtility.Top);
         }
     }
 }

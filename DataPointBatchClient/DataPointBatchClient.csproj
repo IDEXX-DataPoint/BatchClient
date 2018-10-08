@@ -58,6 +58,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\BatchDestinationRepository.cs" />
+    <Compile Include="Repositories\PatientDestinationRepository.cs" />
+    <Compile Include="Repositories\BatchSourceRepository.cs" />
+    <Compile Include="Repositories\SourceRepository.cs" />
     <Compile Include="Utility\BatchApiUtility.cs" />
     <Compile Include="Utility\EmbeddedResource.cs" />
   </ItemGroup>

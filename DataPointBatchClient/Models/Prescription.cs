@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class Prescription : BaseModel
+    public class Prescription : BatchBase
     {
         public string code { get; set; }
         public string description { get; set; }

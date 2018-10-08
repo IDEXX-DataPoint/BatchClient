@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class BaseModel
+    public class BatchBase
     {
         public Guid? dpUid { get; set; }
         public string pimsId { get; set; }

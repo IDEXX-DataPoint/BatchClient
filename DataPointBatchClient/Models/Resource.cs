@@ -1,6 +1,6 @@
 ﻿namespace DataPointBatchClient.Models
 {
-    public class Resource : BaseModel
+    public class Resource : BatchBase
     {
         public string abbreviation { get; set; }
         public string lastName { get; set; }

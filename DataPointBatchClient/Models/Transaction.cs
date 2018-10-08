@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class Transaction : BaseModel
+    public class Transaction : BatchBase
     {
         public string invoiceId { get; set; }
         public string type { get; set; }

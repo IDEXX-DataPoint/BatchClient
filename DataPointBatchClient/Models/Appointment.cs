@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class Appointment : BaseModel
+    public class Appointment : BatchBase
     {
         public string source { get; set; }
         public string type { get; set; }

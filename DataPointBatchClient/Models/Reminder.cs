@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class Reminder : BaseModel
+    public class Reminder : BatchBase
     {
         public string clientPimsId { get; set; }
         public string patientPimsId { get; set; }

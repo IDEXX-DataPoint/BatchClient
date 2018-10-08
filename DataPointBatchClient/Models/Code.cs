@@ -1,6 +1,6 @@
 ﻿namespace DataPointBatchClient.Models
 {
-    public class Code : BaseModel
+    public class Code : BatchBase
     {
         public string pimsType { get; set; }
         public string code { get; set; }

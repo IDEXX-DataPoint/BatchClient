@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class Patient : BaseModel
+    public class Patient : BatchBase
     {
         public string pimsPatientIdentifier { get; set; }
         public string name { get; set; }

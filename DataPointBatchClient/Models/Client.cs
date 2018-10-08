@@ -2,7 +2,7 @@
 
 namespace DataPointBatchClient.Models
 {
-    public class Client : BaseModel
+    public class Client : BatchBase
     {
         public string title { get; set; }
         public string lastName { get; set; }

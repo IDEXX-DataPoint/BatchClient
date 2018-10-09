@@ -16,7 +16,6 @@ namespace DataPointBatchClient.Utility
 
         static BatchApiUtility()
         {
-            // todo test singleton constructor called only once
             Client = new RestClient(Endpoint);
             Authorization = GetAuthorization();
             Filter = GetFilter();

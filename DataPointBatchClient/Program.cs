@@ -23,7 +23,11 @@ namespace DataPointBatchClient
             RunAsync();
 
             // todo only if all successful
+            Console.WriteLine($"LastUpdate to new startTime {startTime}");
             Properties.Settings.Default.LastUpdated = startTime;
+            Properties.Settings.Default.Save();
+            
+            if (System.Diagnostics.Debugger.IsAttached) Console.ReadLine();
         }
 
         private static string GetStartTime()
@@ -46,28 +50,28 @@ namespace DataPointBatchClient
                 Process(new TransactionSourceRepository(), new TransactionDestinationRepository()),
             };
             Task.WaitAll(tasks);
+            Console.WriteLine("All tasks complete");
         }
 
         private static async Task Process<TEntity>(IBatchSourceRepository<TEntity> sourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
         {
             int count;
             var processed = 0;
-
-            // todo get then update Settings.LastUpdated
+            var type = sourceRepository.GetResourceType();
 
             do
             {
                 var skip = processed;
                 var items = await sourceRepository.GetBatchItems(skip);
                 destinationRepository.MergeEntities(items);
-
+                
                 count = items.Count();
                 processed += count;
+                Console.WriteLine($"{processed} {type} processed");
 
             } while (count == BatchApiUtility.Top);
 
-            var type = sourceRepository.GetResourceType();
-            Console.WriteLine($"{processed} {type} processed");
+            Console.WriteLine($"{processed} total {type} processed");
         }
     }
 }

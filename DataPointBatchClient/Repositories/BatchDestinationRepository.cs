@@ -22,6 +22,8 @@ namespace DataPointBatchClient.Repositories
 
         public bool MergeEntities(IEnumerable<T> entities)
         {
+            var success = true;
+
             using (var conn = new SqlConnection(Properties.Settings.Default.ConnectionString))
             {
                 foreach (var entity in entities)
@@ -33,12 +35,12 @@ namespace DataPointBatchClient.Repositories
                     catch (SqlException e)
                     {
                         Console.WriteLine(e);
-                        return false;
+                        success = false;
                     }
                 }
             }
 
-            return true;
+            return success;
         }
     }
 }

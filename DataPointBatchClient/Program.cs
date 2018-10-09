@@ -11,7 +11,20 @@ namespace DataPointBatchClient
     {
         private static void Main()
         {
+            IgnoreLastUpdatedOption();
+
             new BatchProcessAsync().Start();
+
+            if (System.Diagnostics.Debugger.IsAttached) Console.ReadLine();
+        }
+
+        private static void IgnoreLastUpdatedOption()
+        {
+            if (!System.Diagnostics.Debugger.IsAttached) return;
+            Console.Write("Ignore LastUpdated? (y/n): ");
+            var result = Console.ReadLine();
+            if (result?.ToLower().FirstOrDefault() == 'y')
+                Properties.Settings.Default.LastUpdated = string.Empty;
         }
     }
 
@@ -22,15 +35,12 @@ namespace DataPointBatchClient
             var startTime = GetStartTime();
 
             var success = RunAsync();
-
             if (success)
             {
-                Console.WriteLine($"LastUpdate to new startTime {startTime}");
+                Console.WriteLine($"LastUpdated set to new startTime {startTime}");
                 Properties.Settings.Default.LastUpdated = startTime;
                 Properties.Settings.Default.Save();
             }
-            
-            if (System.Diagnostics.Debugger.IsAttached) Console.ReadLine();
         }
 
         private static string GetStartTime()

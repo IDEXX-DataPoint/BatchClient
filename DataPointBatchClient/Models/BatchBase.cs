@@ -4,17 +4,17 @@ namespace DataPointBatchClient.Models
 {
     public class BatchBase
     {
-        public Guid? dpUid { get; set; }
-        public string pimsId { get; set; }
-        public int? siteId { get; set; }
-        public string agentVersion { get; set; }
-        public string action { get; set; }
-        public DateTime? dpCreateDate { get; set; }
-        public DateTime? dpModifiedDate { get; set; }
-        public DateTime? syncDate { get; set; }
-        public Guid? correlationId { get; set; }
-        public Guid? lastModifiedByCorrelationId { get; set; }
-        public double? generation { get; set; }
-        public bool? deleted { get; set; }
+        public Guid? DpUid { get; set; }
+        public string PimsId { get; set; }
+        public int? SiteId { get; set; }
+        public string AgentVersion { get; set; }
+        public string Action { get; set; }
+        public DateTime? DpCreateDate { get; set; }
+        public DateTime? DpModifiedDate { get; set; }
+        public DateTime? SyncDate { get; set; }
+        public Guid? CorrelationId { get; set; }
+        public Guid? LastModifiedByCorrelationId { get; set; }
+        public double? Generation { get; set; }
+        public bool? Deleted { get; set; }
     }
 }

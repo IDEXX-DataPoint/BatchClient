@@ -4,13 +4,13 @@ namespace DataPointBatchClient.Models
 {
     public class Invoice : BatchBase
     {
-        public string invoiceId { get; set; }
-        public double? amount { get; set; }
-        public DateTime? transactionDate { get; set; }
-        public string clientPimsId { get; set; }
-        public string patientPimsId { get; set; }
-        public double? discountAmount { get; set; }
-        public double? taxAmount { get; set; }
-        public string locationId { get; set; }
+        public string InvoiceId { get; set; }
+        public double? Amount { get; set; }
+        public DateTime? TransactionDate { get; set; }
+        public string ClientPimsId { get; set; }
+        public string PatientPimsId { get; set; }
+        public double? DiscountAmount { get; set; }
+        public double? TaxAmount { get; set; }
+        public string LocationId { get; set; }
     }
 }

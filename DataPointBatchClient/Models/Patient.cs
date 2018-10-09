@@ -4,25 +4,25 @@ namespace DataPointBatchClient.Models
 {
     public class Patient : BatchBase
     {
-        public string pimsPatientIdentifier { get; set; }
-        public string name { get; set; }
-        public string gender { get; set; }
-        public string speciesDescription { get; set; }
-        public string breedId { get; set; }
-        public string breedDescription { get; set; }
-        public string colorId { get; set; }
-        public string microchipId { get; set; }
-        public string colorDescription { get; set; }
-        public DateTime? dateOfDeath { get; set; }
-        public DateTime? dateOfBirth { get; set; }
-        public bool? spayedOrNeutered { get; set; }
-        public bool? inactive { get; set; }
-        public double? weight { get; set; }
-        public string weightUnit { get; set; }
-        public string weightUnitDescription { get; set; }
-        public string rabiesTag { get; set; }
-        public string clientPimsId { get; set; }
-        public string pimsClientIdentifier { get; set; }
-        public string locationId { get; set; }
+        public string PimsPatientIdentifier { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public string SpeciesDescription { get; set; }
+        public string BreedId { get; set; }
+        public string BreedDescription { get; set; }
+        public string ColorId { get; set; }
+        public string MicrochipId { get; set; }
+        public string ColorDescription { get; set; }
+        public DateTime? DateOfDeath { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public bool? SpayedOrNeutered { get; set; }
+        public bool? Inactive { get; set; }
+        public double? Weight { get; set; }
+        public string WeightUnit { get; set; }
+        public string WeightUnitDescription { get; set; }
+        public string RabiesTag { get; set; }
+        public string ClientPimsId { get; set; }
+        public string PimsClientIdentifier { get; set; }
+        public string LocationId { get; set; }
     }
 }

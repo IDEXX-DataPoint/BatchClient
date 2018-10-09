@@ -14,7 +14,7 @@ namespace DataPointBatchClient.Repositories
         public ClientSourceRepository() : base(Resource) { }
     }
 
-    public class CodeSourceRepository : BatchSourceRepository<Code>
+    public class CodeSourceRepository : BatchSourceRepository<CodeModel>
     {
         private static string Resource { get; } = "Codes";
         public CodeSourceRepository() : base(Resource) { }

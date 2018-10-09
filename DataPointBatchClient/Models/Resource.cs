@@ -2,20 +2,20 @@
 {
     public class Resource : BatchBase
     {
-        public string abbreviation { get; set; }
-        public string lastName { get; set; }
-        public string firstName { get; set; }
-        public string middleName { get; set; }
-        public string title { get; set; }
-        public string address1 { get; set; }
-        public string address2 { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string postalCode { get; set; }
-        public string classId { get; set; }
-        public string license { get; set; }
-        public string note { get; set; }
-        public string status { get; set; }
-        public string locationId { get; set; }
+        public string Abbreviation { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string Title { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string ClassId { get; set; }
+        public string License { get; set; }
+        public string Note { get; set; }
+        public string Status { get; set; }
+        public string LocationId { get; set; }
     }
 }

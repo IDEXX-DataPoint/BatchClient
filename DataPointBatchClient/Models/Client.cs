@@ -4,34 +4,34 @@ namespace DataPointBatchClient.Models
 {
     public class Client : BatchBase
     {
-        public string title { get; set; }
-        public string lastName { get; set; }
-        public string firstName { get; set; }
-        public string middleName { get; set; }
-        public string alternateFirstName { get; set; }
-        public string alternateLastName { get; set; }
-        public DateTime? pimsCreatedDate { get; set; }
-        public bool? inactive { get; set; }
-        public bool? suspendReminders { get; set; }
-        public string locationId { get; set; }
-        public string address1 { get; set; }
-        public string address2 { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string postalCode { get; set; }
-        public string alternateAddress1 { get; set; }
-        public string alternateAddress2 { get; set; }
-        public string alternateCity { get; set; }
-        public string alternateState { get; set; }
-        public string alternatePostalCode { get; set; }
-        public string phoneName1 { get; set; }
-        public string phone1 { get; set; }
-        public string phoneName2 { get; set; }
-        public string phone2 { get; set; }
-        public string phoneName3 { get; set; }
-        public string phone3 { get; set; }
-        public string email { get; set; }
-        public string pimsClientIdentifier { get; set; }
-        public string referralSource { get; set; }
+        public string Title { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string AlternateFirstName { get; set; }
+        public string AlternateLastName { get; set; }
+        public DateTime? PimsCreatedDate { get; set; }
+        public bool? Inactive { get; set; }
+        public bool? SuspendReminders { get; set; }
+        public string LocationId { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string AlternateAddress1 { get; set; }
+        public string AlternateAddress2 { get; set; }
+        public string AlternateCity { get; set; }
+        public string AlternateState { get; set; }
+        public string AlternatePostalCode { get; set; }
+        public string PhoneName1 { get; set; }
+        public string Phone1 { get; set; }
+        public string PhoneName2 { get; set; }
+        public string Phone2 { get; set; }
+        public string PhoneName3 { get; set; }
+        public string Phone3 { get; set; }
+        public string Email { get; set; }
+        public string PimsClientIdentifier { get; set; }
+        public string ReferralSource { get; set; }
     }
 }

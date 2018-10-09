@@ -4,12 +4,12 @@ namespace DataPointBatchClient.Models
 {
     public class Reminder : BatchBase
     {
-        public string clientPimsId { get; set; }
-        public string patientPimsId { get; set; }
-        public string code { get; set; }
-        public string description { get; set; }
-        public DateTime? dueDate { get; set; }
-        public DateTime? lastRemindedDate { get; set; }
-        public string locationId { get; set; }
+        public string ClientPimsId { get; set; }
+        public string PatientPimsId { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public DateTime? DueDate { get; set; }
+        public DateTime? LastRemindedDate { get; set; }
+        public string LocationId { get; set; }
     }
 }

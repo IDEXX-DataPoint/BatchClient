@@ -14,7 +14,7 @@ namespace DataPointBatchClient.Repositories
         public ClientDestinationRepository() : base(Path) { }
     }
 
-    public class CodeDestinationRepository : BatchDestinationRepository<Code>
+    public class CodeDestinationRepository : BatchDestinationRepository<CodeModel>
     {
         private static string Path { get; } = "DataPointBatchClient.Scripts.MergeCode.sql";
         public CodeDestinationRepository() : base(Path) { }

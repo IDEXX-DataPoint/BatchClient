@@ -65,6 +65,9 @@ namespace DataPointBatchClient
                 processed += count;
 
             } while (count == BatchApiUtility.Top);
+
+            var type = sourceRepository.GetResourceType();
+            Console.WriteLine($"{processed} {type} processed");
         }
     }
 }

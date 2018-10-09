@@ -7,6 +7,7 @@ namespace DataPointBatchClient.Repositories
 {
     public interface IBatchSourceRepository<T>
     {
+        string GetResourceType();
         Task<IEnumerable<T>> GetBatchItems(int skip);
     }
 
@@ -19,9 +20,14 @@ namespace DataPointBatchClient.Repositories
             _resource = resource;
         }
 
+        public string GetResourceType()
+        {
+            return _resource;
+        }
+
         private RestRequest GetRequest(int skip)
         {
-            var request = new RestRequest(_resource);
+            var request = new RestRequest($"odata/{_resource}");
 
             request.AddHeader("Authorization", BatchApiUtility.Authorization);
             request.AddParameter("$filter", BatchApiUtility.Filter);

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
-using DataPointBatchClient.Utility;
+using Topshelf;
 
 namespace DataPointBatchClient
 {
@@ -14,17 +14,26 @@ namespace DataPointBatchClient
         {
             IgnoreLastUpdatedOption();
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            new BatchProcessAsync().Start();
-            stopwatch.Stop();
-            Console.WriteLine($"Time elapsed: {stopwatch.ElapsedMilliseconds}");
+            var rc = HostFactory.Run(x =>
+            {
+                x.Service<BatchProcessAsync>(s =>
+                {
+                    s.ConstructUsing(() => new BatchProcessAsync());
+                    s.WhenStarted(y => y.Start());
+                    s.WhenStopped(y => y.Stop());
+                });
 
-            if (Debugger.IsAttached) Console.ReadLine();
+                x.RunAsLocalSystem();
+
+                x.SetDescription("Sample Topshelf Host");
+                x.SetDisplayName("Stuff");
+                x.SetServiceName("Stuff");
+            });
         }
 
         private static void IgnoreLastUpdatedOption()
         {
+            // todo move LastUpdated logic into db
             if (!Debugger.IsAttached) return;
 
             var lastUpdated = Properties.Settings.Default.LastUpdated;
@@ -43,6 +52,7 @@ namespace DataPointBatchClient
         {
             var startTime = GetStartTime();
 
+            // todo wrap in timer
             var success = RunAsync();
             if (success)
             {
@@ -50,6 +60,12 @@ namespace DataPointBatchClient
                 Properties.Settings.Default.LastUpdated = startTime;
                 Properties.Settings.Default.Save();
             }
+        }
+
+        public void Stop()
+        {
+            // todo dispose timer
+            // todo link cancellation token
         }
 
         private static string GetStartTime()

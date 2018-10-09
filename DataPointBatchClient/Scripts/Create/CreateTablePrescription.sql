@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Prescription](
     [administeredDate] [date] NULL,
     [quantity] [float] NULL,
     [amount] [float] NULL,
-    [instructions] [varchar](255) NULL,
+    [instructions] [nvarchar](max) NULL,
     [clientPimsId] [nvarchar](50) NULL,
     [patientPimsId] [nvarchar](50) NULL,
     [locationId] [nvarchar](50) NULL,

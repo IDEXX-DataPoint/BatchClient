@@ -11,7 +11,7 @@ CREATE TABLE [dbo].[Transaction](
     [patientPimsId] [nvarchar](50) NULL,
     [transactionDate] [date] NULL,
     [sequence] [float] NULL,
-    [code] [varchar] NULL,
+    [code] [nvarchar](50) NULL,
     [description] [nvarchar](max) NULL,
     [quantity] [float] NULL,
     [amount] [float] NULL,

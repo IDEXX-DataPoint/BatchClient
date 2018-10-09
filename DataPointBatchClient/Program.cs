@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using DataPointBatchClient.Repositories;
+using DataPointBatchClient.Services;
 using DataPointBatchClient.Utility;
 
 namespace DataPointBatchClient
@@ -61,15 +61,15 @@ namespace DataPointBatchClient
         {
             var tasks = new[]
             {
-                Process(new AppointmentSourceRepository(), new AppointmentDestinationRepository()),
-                Process(new ClientSourceRepository(), new ClientDestinationRepository()),
-                Process(new CodeSourceRepository(), new CodeDestinationRepository()),
-                Process(new InvoiceSourceRepository(), new InvoiceDestinationRepository()),
-                Process(new PatientSourceRepository(), new PatientDestinationRepository()),
-                Process(new PrescriptionSourceRepository(), new PrescriptionDestinationRepository()),
-                Process(new ReminderSourceRepository(), new ReminderDestinationRepository()),
-                Process(new ResourceSourceRepository(), new ResourceDestinationRepository()),
-                Process(new TransactionSourceRepository(), new TransactionDestinationRepository()),
+                new AppointmentBatchToSqlService().Process(),
+                new ClientBatchToSqlService().Process(),
+                new CodeBatchToSqlService().Process(),
+                new InvoiceBatchToSqlService().Process(),
+                new PatientBatchToSqlService().Process(),
+                new PrescriptionBatchToSqlService().Process(),
+                new ReminderBatchToSqlService().Process(),
+                new ResourceBatchToSqlService().Process(),
+                new TransactionBatchToSqlService().Process(),
             };
             Task.WaitAll(tasks);
 
@@ -91,29 +91,6 @@ namespace DataPointBatchClient
 
             Console.WriteLine(message);
             return success;
-        }
-
-        private static async Task<bool> Process<TEntity>(IBatchSourceRepository<TEntity> sourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
-        {
-            int count;
-            var processed = 0;
-            var type = sourceRepository.GetResourceType();
-
-            do
-            {
-                var skip = processed;
-                var items = await sourceRepository.GetBatchItems(skip);
-                var success = destinationRepository.MergeEntities(items);
-                if (!success) return false; // todo review / discuss how to improve sql error handling
-                
-                count = items.Count();
-                processed += count;
-                Console.WriteLine($"{type} processed: {processed}");
-
-            } while (count == BatchApiUtility.Top);
-            
-            Console.WriteLine($"{type} complete");
-            return true;
         }
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="Repositories\DestinationRepositories.cs" />
     <Compile Include="Repositories\BatchSourceRepository.cs" />
     <Compile Include="Repositories\SourceRepositories.cs" />
+    <Compile Include="Services\DataPointBatchToSqlService.cs" />
     <Compile Include="Utility\BatchApiUtility.cs" />
     <Compile Include="Utility\EmbeddedResource.cs" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Dapper;
 using DataPointBatchClient.Utility;
 
@@ -8,7 +9,7 @@ namespace DataPointBatchClient.Repositories
 {
     public interface IBatchDestinationRepository<in T>
     {
-        bool MergeEntities(IEnumerable<T> entities);
+        Task<bool> MergeEntities(IEnumerable<T> entities);
     }
 
     public abstract class BatchDestinationRepository<T> : IBatchDestinationRepository<T>
@@ -20,7 +21,7 @@ namespace DataPointBatchClient.Repositories
             Query = EmbeddedResource.Get(resourcePath);
         }
 
-        public bool MergeEntities(IEnumerable<T> entities)
+        public async Task<bool> MergeEntities(IEnumerable<T> entities)
         {
             var success = true;
 
@@ -30,7 +31,7 @@ namespace DataPointBatchClient.Repositories
                 {
                     try
                     {
-                        conn.Execute(Query, entity);
+                        await conn.ExecuteAsync(Query, entity);
                     }
                     catch (SqlException e)
                     {

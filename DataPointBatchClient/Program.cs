@@ -48,7 +48,7 @@ namespace DataPointBatchClient
             Task.WaitAll(tasks);
         }
 
-        private static async Task Process<TEntity>(IBatchSourceRepository<TEntity> sourceSourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
+        private static async Task Process<TEntity>(IBatchSourceRepository<TEntity> sourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
         {
             int count;
             var processed = 0;
@@ -58,7 +58,7 @@ namespace DataPointBatchClient
             do
             {
                 var skip = processed;
-                var items = await sourceSourceRepository.GetBatchItems(skip);
+                var items = await sourceRepository.GetBatchItems(skip);
                 destinationRepository.MergeEntities(items);
 
                 count = items.Count();

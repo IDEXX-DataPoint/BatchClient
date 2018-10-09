@@ -1,4 +1,4 @@
-﻿MERGE dbo.MyTable AS target
+﻿MERGE dbo.Appointment AS target
 USING (SELECT @source
     ,@type
     ,@clientPimsId

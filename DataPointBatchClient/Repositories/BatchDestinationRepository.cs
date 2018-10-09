@@ -8,7 +8,7 @@ namespace DataPointBatchClient.Repositories
 {
     public interface IBatchDestinationRepository<in T>
     {
-        void MergeEntities(IEnumerable<T> entities);
+        bool MergeEntities(IEnumerable<T> entities);
     }
 
     public abstract class BatchDestinationRepository<T> : IBatchDestinationRepository<T>
@@ -20,7 +20,7 @@ namespace DataPointBatchClient.Repositories
             Query = EmbeddedResource.Get(resourcePath);
         }
 
-        public void MergeEntities(IEnumerable<T> entities)
+        public bool MergeEntities(IEnumerable<T> entities)
         {
             using (var conn = new SqlConnection(Properties.Settings.Default.ConnectionString))
             {
@@ -32,11 +32,13 @@ namespace DataPointBatchClient.Repositories
                     }
                     catch (SqlException e)
                     {
-                        // todo logging
                         Console.WriteLine(e);
+                        return false;
                     }
                 }
             }
+
+            return true;
         }
     }
 }

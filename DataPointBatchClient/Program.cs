@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataPointBatchClient.Repositories;
@@ -20,12 +21,14 @@ namespace DataPointBatchClient
         {
             var startTime = GetStartTime();
 
-            RunAsync();
+            var success = RunAsync();
 
-            // todo only if all successful
-            Console.WriteLine($"LastUpdate to new startTime {startTime}");
-            Properties.Settings.Default.LastUpdated = startTime;
-            Properties.Settings.Default.Save();
+            if (success)
+            {
+                Console.WriteLine($"LastUpdate to new startTime {startTime}");
+                Properties.Settings.Default.LastUpdated = startTime;
+                Properties.Settings.Default.Save();
+            }
             
             if (System.Diagnostics.Debugger.IsAttached) Console.ReadLine();
         }
@@ -35,7 +38,7 @@ namespace DataPointBatchClient
             return DateTime.UtcNow.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'");
         }
 
-        private static void RunAsync()
+        private static bool RunAsync()
         {
             var tasks = new[]
             {
@@ -50,10 +53,28 @@ namespace DataPointBatchClient
                 Process(new TransactionSourceRepository(), new TransactionDestinationRepository()),
             };
             Task.WaitAll(tasks);
-            Console.WriteLine("All tasks complete");
+
+            return ValidateSuccess(tasks);
         }
 
-        private static async Task Process<TEntity>(IBatchSourceRepository<TEntity> sourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
+        private static bool ValidateSuccess(IEnumerable<Task<bool>> tasks)
+        {
+            var success = true;
+            var message = "All tasks complete";
+            foreach (var task in tasks)
+            {
+                if (!task.Result)
+                {
+                    success = false;
+                    message += " with error(s)";
+                }
+            }
+
+            Console.WriteLine(message);
+            return success;
+        }
+
+        private static async Task<bool> Process<TEntity>(IBatchSourceRepository<TEntity> sourceRepository, IBatchDestinationRepository<TEntity> destinationRepository)
         {
             int count;
             var processed = 0;
@@ -63,7 +84,8 @@ namespace DataPointBatchClient
             {
                 var skip = processed;
                 var items = await sourceRepository.GetBatchItems(skip);
-                destinationRepository.MergeEntities(items);
+                var success = destinationRepository.MergeEntities(items);
+                if (!success) return false; // todo review / discuss how to improve sql error handling
                 
                 count = items.Count();
                 processed += count;
@@ -72,6 +94,7 @@ namespace DataPointBatchClient
             } while (count == BatchApiUtility.Top);
 
             Console.WriteLine($"{processed} total {type} processed");
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using System;
+using RestSharp;
 
 namespace DataPointBatchClient.Utility
 {
@@ -38,9 +39,13 @@ namespace DataPointBatchClient.Utility
             var siteId = Properties.Settings.Default.SiteId;
             var lastUpdated = Properties.Settings.Default.LastUpdated;
 
-            return string.IsNullOrEmpty(lastUpdated)
-                ? $"siteId eq {siteId}"
-                : $"siteId eq {siteId} and dpModifiedDate gt {lastUpdated}";
+            if (string.IsNullOrEmpty(lastUpdated))
+            {
+                return $"siteId eq {siteId}";
+            }
+
+            Console.WriteLine($"LastUpdated {lastUpdated}");
+            return $"siteId eq {siteId} and dpModifiedDate gt {lastUpdated}";
         }
     }
 

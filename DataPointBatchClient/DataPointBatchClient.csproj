@@ -88,7 +88,7 @@
     <EmbeddedResource Include="Scripts\MergeTransaction.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\CreateTablePatient.sql" />
+    <EmbeddedResource Include="Scripts\Create\CreateTablePatient.sql" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\MergePatient.sql" />
@@ -107,6 +107,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\MergeResource.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\Create\CreateTableAppointment.sql" />
+    <Content Include="Scripts\Create\CreateTableClient.sql" />
+    <Content Include="Scripts\Create\CreateTableCode.sql" />
+    <Content Include="Scripts\Create\CreateTableInvoice.sql" />
+    <Content Include="Scripts\Create\CreateTablePrescription.sql" />
+    <Content Include="Scripts\Create\CreateTableReminder.sql" />
+    <Content Include="Scripts\Create\CreateTableResource.sql" />
+    <Content Include="Scripts\Create\CreateTableTransaction.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

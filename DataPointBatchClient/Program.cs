@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DataPointBatchClient.Repositories;
@@ -13,15 +14,23 @@ namespace DataPointBatchClient
         {
             IgnoreLastUpdatedOption();
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             new BatchProcessAsync().Start();
+            stopwatch.Stop();
+            Console.WriteLine($"Time elapsed: {stopwatch.ElapsedMilliseconds}");
 
-            if (System.Diagnostics.Debugger.IsAttached) Console.ReadLine();
+            if (Debugger.IsAttached) Console.ReadLine();
         }
 
         private static void IgnoreLastUpdatedOption()
         {
-            if (!System.Diagnostics.Debugger.IsAttached) return;
-            Console.Write("Ignore LastUpdated? (y/n): ");
+            if (!Debugger.IsAttached) return;
+
+            var lastUpdated = Properties.Settings.Default.LastUpdated;
+            if (string.IsNullOrEmpty(lastUpdated)) return;
+
+            Console.Write($"Ignore LastUpdated '{lastUpdated}'? (y/n): ");
             var result = Console.ReadLine();
             if (result?.ToLower().FirstOrDefault() == 'y')
                 Properties.Settings.Default.LastUpdated = string.Empty;
@@ -37,7 +46,7 @@ namespace DataPointBatchClient
             var success = RunAsync();
             if (success)
             {
-                Console.WriteLine($"LastUpdated set to new startTime {startTime}");
+                Console.WriteLine($"LastUpdated set to: {startTime}");
                 Properties.Settings.Default.LastUpdated = startTime;
                 Properties.Settings.Default.Save();
             }
@@ -99,11 +108,11 @@ namespace DataPointBatchClient
                 
                 count = items.Count();
                 processed += count;
-                Console.WriteLine($"{processed} {type} processed");
+                Console.WriteLine($"{type} processed: {processed}");
 
             } while (count == BatchApiUtility.Top);
-
-            Console.WriteLine($"{processed} total {type} processed");
+            
+            Console.WriteLine($"{type} complete");
             return true;
         }
     }

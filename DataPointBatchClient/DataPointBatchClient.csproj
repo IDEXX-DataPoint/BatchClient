@@ -61,6 +61,7 @@
     <Compile Include="Models\Prescription.cs" />
     <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\Resource.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,17 +70,25 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\BatchDestinationRepository.cs" />
-    <Compile Include="Repositories\DestinationRepositories.cs" />
-    <Compile Include="Repositories\BatchSourceRepository.cs" />
-    <Compile Include="Repositories\SourceRepositories.cs" />
+    <Compile Include="Repositories\IBatchDestinationRepository.cs" />
+    <Compile Include="Repositories\BatchDestinationRepositories.cs" />
+    <Compile Include="Repositories\IBatchSourceRepository.cs" />
+    <Compile Include="Repositories\SettingsRepository.cs" />
+    <Compile Include="Repositories\BatchSourceRepositories.cs" />
+    <Content Include="Scripts\Create\CreateTableSettings.sql" />
+    <EmbeddedResource Include="Scripts\MergeSettings.sql" />
     <Compile Include="Services\DataPointBatchToSqlService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Utility\BatchApiUtility.cs" />
     <Compile Include="Utility\EmbeddedResource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="App.config.template" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.config.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

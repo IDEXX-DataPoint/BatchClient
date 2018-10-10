@@ -1,16 +1,14 @@
-﻿using System;
-using RestSharp;
+﻿using RestSharp;
 
 namespace DataPointBatchClient.Utility
 {
     /// <summary>
-    /// Variables which only be initialized once for all resources
+    /// Initialized once for all resources
     /// </summary>
     public static class BatchApiUtility
     {
         public static readonly RestClient Client;
         public static readonly string Authorization;
-        public static readonly string Filter;
         public static int Top => 5000; // for debugging
 
         private const string Endpoint = "https://io.datapointapi.com";
@@ -19,7 +17,6 @@ namespace DataPointBatchClient.Utility
         {
             Client = new RestClient(Endpoint);
             Authorization = GetAuthorization();
-            Filter = GetFilter();
         }
 
         private static string GetAuthorization()
@@ -32,20 +29,6 @@ namespace DataPointBatchClient.Utility
 
             var token = Client.Execute<Token>(request).Data.access_token;
             return $"Bearer {token}";
-        }
-
-        private static string GetFilter()
-        {
-            var siteId = Properties.Settings.Default.SiteId;
-            var lastUpdated = Properties.Settings.Default.LastUpdated;
-
-            if (string.IsNullOrEmpty(lastUpdated))
-            {
-                return $"siteId eq {siteId}";
-            }
-
-            Console.WriteLine($"LastUpdated {lastUpdated}");
-            return $"siteId eq {siteId} and dpModifiedDate gt {lastUpdated}";
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataPointBatchClient.Services;
 using DataPointBatchClient.Utility;
 using RestSharp;
 
@@ -25,23 +26,33 @@ namespace DataPointBatchClient.Repositories
             return _resource;
         }
 
-        private RestRequest GetRequest(int skip)
+        public async Task<IEnumerable<T>> GetBatchItems(int skip = 0)
+        {
+            var request = await GetRequest(skip);
+            var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request);
+            return response.Data.value;
+        }
+
+        private async Task<RestRequest> GetRequest(int skip)
         {
             var request = new RestRequest($"odata/{_resource}");
 
             request.AddHeader("Authorization", BatchApiUtility.Authorization);
-            request.AddParameter("$filter", BatchApiUtility.Filter);
+            request.AddParameter("$filter", await GetFilter());
             request.AddParameter("$top", BatchApiUtility.Top);
             request.AddParameter("$skip", skip);
 
             return request;
         }
 
-        public async Task<IEnumerable<T>> GetBatchItems(int skip = 0)
+        private async Task<string> GetFilter()
         {
-            var request = GetRequest(skip);
-            var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request);
-            return response.Data.value;
+            var siteId = Properties.Settings.Default.SiteId;
+            var lastUpdated = await SettingsService.GetLastUpdated(_resource);
+
+            return string.IsNullOrEmpty(lastUpdated)
+                ? $"siteId eq {siteId}"
+                : $"siteId eq {siteId} and dpModifiedDate gt {lastUpdated}";
         }
     }
 

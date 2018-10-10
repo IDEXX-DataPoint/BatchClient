@@ -20,9 +20,11 @@ namespace DataPointBatchClient.Services
 
         private static async Task<bool> SyncEntity<T>(IBatchSourceRepository<T> sourceRepo, IBatchDestinationRepository<T> destinationRepo)
         {
+            var type = sourceRepo.GetResourceType();
+            var startTime = DateTime.Now;
+
             int count;
             var processed = 0;
-            var type = sourceRepo.GetResourceType();
 
             do
             {
@@ -37,6 +39,7 @@ namespace DataPointBatchClient.Services
 
             } while (count == BatchApiUtility.Top);
 
+            SettingsService.Update(type, startTime);
             Console.WriteLine($"{type} complete");
             return true;
         }

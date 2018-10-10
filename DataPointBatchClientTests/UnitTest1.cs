@@ -1,4 +1,7 @@
-﻿using DataPointBatchClient.Utility;
+﻿using System;
+using System.Threading.Tasks;
+using DataPointBatchClient.Repositories;
+using DataPointBatchClient.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataPointBatchClientTests
@@ -18,6 +21,20 @@ namespace DataPointBatchClientTests
         {
             var sql = EmbeddedResource.Get("DataPointBatchClient.Scripts.InsertPatient.sql");
             Assert.AreNotEqual(sql, null);
+        }
+
+        [TestMethod]
+        public void SettingsRepository_Get()
+        {
+            var settings = new
+            {
+                ResourceName = "Appointments",
+                LastUpdated = DateTime.Parse("2018-10-10")
+            };
+            
+            var task = SettingsRepository.Get(settings.ResourceName);
+            var result = task.Result;
+            Assert.AreEqual(result, settings);
         }
     }
 }

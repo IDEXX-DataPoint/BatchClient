@@ -31,6 +31,7 @@ namespace DataPointBatchClient.Repositories
                 {
                     try
                     {
+                        // todo dapper table valued parameter to consume entities
                         await conn.ExecuteAsync(Query, entity);
                     }
                     catch (SqlException e)

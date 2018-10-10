@@ -75,17 +75,18 @@ namespace DataPointBatchClient
 
         private static bool RunAsync()
         {
+            var service = new DataPointBatchToSqlService();
             var tasks = new[]
             {
-                new AppointmentBatchToSqlService().Process(),
-                new ClientBatchToSqlService().Process(),
-                new CodeBatchToSqlService().Process(),
-                new InvoiceBatchToSqlService().Process(),
-                new PatientBatchToSqlService().Process(),
-                new PrescriptionBatchToSqlService().Process(),
-                new ReminderBatchToSqlService().Process(),
-                new ResourceBatchToSqlService().Process(),
-                new TransactionBatchToSqlService().Process(),
+                service.SyncAppointments(),
+                service.SyncClients(),
+                service.SyncCodes(),
+                service.SyncInvoices(),
+                service.SyncPatients(),
+                service.SyncPrescriptions(),
+                service.SyncReminders(),
+                service.SyncResources(),
+                service.SyncTransactions(),
             };
             Task.WaitAll(tasks);
 

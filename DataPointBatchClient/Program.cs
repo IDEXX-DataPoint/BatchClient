@@ -14,20 +14,20 @@ namespace DataPointBatchClient
         {
             IgnoreLastUpdatedOption();
 
-            var rc = HostFactory.Run(x =>
+            HostFactory.Run(host =>
             {
-                x.Service<BatchProcessAsync>(s =>
+                host.Service<BatchProcessAsync>(service =>
                 {
-                    s.ConstructUsing(() => new BatchProcessAsync());
-                    s.WhenStarted(y => y.Start());
-                    s.WhenStopped(y => y.Stop());
+                    service.ConstructUsing(() => new BatchProcessAsync());
+                    service.WhenStarted(x => x.Start());
+                    service.WhenStopped(x => x.Stop());
                 });
 
-                x.RunAsLocalSystem();
+                host.RunAsLocalSystem();
 
-                x.SetDescription("Sample Topshelf Host");
-                x.SetDisplayName("Stuff");
-                x.SetServiceName("Stuff");
+                host.SetDescription("Pull DataPoint batch API data into a local database");
+                host.SetDisplayName("DataPoint Batch Client");
+                host.SetServiceName("DataPoint Batch Client");
             });
         }
 

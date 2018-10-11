@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using DataPointBatchClient.Repositories;
 using DataPointBatchClient.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

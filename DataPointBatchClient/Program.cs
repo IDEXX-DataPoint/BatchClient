@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
 using Topshelf;
@@ -30,6 +32,8 @@ namespace DataPointBatchClient
 
     public class BatchProcessAsync
     {
+        private static readonly CancellationTokenSource TokenSource = new CancellationTokenSource();
+
         public void Start()
         {
             // todo wrap in timer
@@ -38,8 +42,7 @@ namespace DataPointBatchClient
 
         public void Stop()
         {
-            // todo dispose timer
-            // todo link cancellation token
+            TokenSource.Cancel();
         }
 
         private static void RunAsync()
@@ -57,21 +60,24 @@ namespace DataPointBatchClient
                 service.SyncResources(),
                 service.SyncTransactions(),
             };
-            Task.WaitAll(tasks);
 
-            ValidateSuccess(tasks);
+            try
+            {
+                Task.WaitAll(tasks, TokenSource.Token);
+                ValidateSuccess(tasks);
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("Sync cancelled");
+            }
         }
 
         private static void ValidateSuccess(IEnumerable<Task<bool>> tasks)
         {
             var message = "All tasks complete";
-            foreach (var task in tasks)
-            {
-                if (!task.Result)
-                {
-                    message += " with error(s)";
-                }
-            }
+
+            if (tasks.Any(x => !x.Result))
+                message += " with error(s)";
 
             Console.WriteLine(message);
         }

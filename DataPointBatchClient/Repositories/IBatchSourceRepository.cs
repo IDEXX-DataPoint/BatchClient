@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
 using DataPointBatchClient.Utility;
@@ -9,7 +11,7 @@ namespace DataPointBatchClient.Repositories
     public interface IBatchSourceRepository<T>
     {
         string GetResourceType();
-        Task<IEnumerable<T>> GetBatchItems(int skip);
+        Task<IEnumerable<T>> GetBatchItems(int skip, CancellationToken token);
     }
 
     public abstract class BatchSourceRepository<T> : IBatchSourceRepository<T>
@@ -26,11 +28,25 @@ namespace DataPointBatchClient.Repositories
             return _resource;
         }
 
-        public async Task<IEnumerable<T>> GetBatchItems(int skip = 0)
+        public async Task<IEnumerable<T>> GetBatchItems(int skip, CancellationToken token)
         {
             var request = await GetRequest(skip);
-            var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request);
-            return response.Data.value;
+
+            try
+            {
+                var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request, token);
+                return response.Data.value;
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("Cancellation requested");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return new List<T>();
         }
 
         private async Task<RestRequest> GetRequest(int skip)

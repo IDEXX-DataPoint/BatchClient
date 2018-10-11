@@ -47,28 +47,32 @@ namespace DataPointBatchClient
 
         private static void RunAsync()
         {
-            var service = new DataPointBatchToSqlService();
-            var tasks = new[]
-            {
-                service.SyncAppointments(),
-                service.SyncClients(),
-                service.SyncCodes(),
-                service.SyncInvoices(),
-                service.SyncPatients(),
-                service.SyncPrescriptions(),
-                service.SyncReminders(),
-                service.SyncResources(),
-                service.SyncTransactions(),
-            };
-
             try
             {
-                Task.WaitAll(tasks, TokenSource.Token);
+                var service = new DataPointBatchToSqlService(TokenSource.Token);
+                var tasks = new[]
+                {
+                    service.SyncAppointments(),
+                    service.SyncClients(),
+                    service.SyncCodes(),
+                    service.SyncInvoices(),
+                    service.SyncPatients(),
+                    service.SyncPrescriptions(),
+                    service.SyncReminders(),
+                    service.SyncResources(),
+                    service.SyncTransactions(),
+                };
+
+                Task.WaitAll(tasks);
                 ValidateSuccess(tasks);
             }
             catch (OperationCanceledException)
             {
                 Console.WriteLine("Sync cancelled");
+            }
+            catch (Exception e)
+            {// one or more errors occured
+                Console.WriteLine(e.Message);
             }
         }
 

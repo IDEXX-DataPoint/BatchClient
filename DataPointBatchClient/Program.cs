@@ -36,8 +36,7 @@ namespace DataPointBatchClient
 
         public void Start()
         {
-            // todo wrap in timer
-            RunAsync();
+            Task.Run(StartJob);
         }
 
         public void Stop()
@@ -45,7 +44,18 @@ namespace DataPointBatchClient
             TokenSource.Cancel();
         }
 
-        private static void RunAsync()
+        private static async Task StartJob()
+        {
+            var hours = new TimeSpan(2, 0, 0); // 2 hours
+            while (true)
+            {
+                await Sync();
+                var nextTime = DateTime.Now.Date.AddDays(1).Add(hours) - DateTime.Now;
+                await Task.Delay(nextTime);
+            }
+        }
+
+        private static async Task Sync()
         {
             try
             {
@@ -63,7 +73,7 @@ namespace DataPointBatchClient
                     service.SyncTransactions(),
                 };
 
-                Task.WaitAll(tasks);
+                await Task.WhenAll(tasks);
                 ValidateSuccess(tasks);
             }
             catch (OperationCanceledException)
@@ -71,7 +81,7 @@ namespace DataPointBatchClient
                 Console.WriteLine("Sync cancelled");
             }
             catch (Exception e)
-            {// one or more errors occured
+            {
                 Console.WriteLine(e.Message);
             }
         }

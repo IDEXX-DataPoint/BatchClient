@@ -8,10 +8,12 @@ namespace DataPointBatchClientTests
     [TestClass]
     public class UnitTest1
     {
+        /// <summary>
+        /// Add existing App.config from main project to this project
+        /// </summary>
         [TestMethod]
         public void BatchApiUtility_RetrieveToken()
         {
-            // todo link or copy app.config
             Assert.AreNotEqual(BatchApiUtility.Authorization, "Bearer ");
         }
 

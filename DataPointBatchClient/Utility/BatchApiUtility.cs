@@ -1,25 +1,34 @@
-﻿using RestSharp;
+﻿using System;
+using System.Threading.Tasks;
+using RestSharp;
 
 namespace DataPointBatchClient.Utility
 {
     /// <summary>
     /// Initialized once for all resources
     /// </summary>
-    public static class BatchApiUtility
+    public class BatchApiUtility
     {
-        public static readonly RestClient Client;
-        public static readonly string Authorization;
-        public static int Top => 5000; // for debugging
+        public const int Top = 5000; // for debugging
 
         private const string Endpoint = "https://io.datapointapi.com";
 
-        static BatchApiUtility()
+        public RestClient Client { get; }
+        private Lazy<Task<string>> _authToken;
+
+
+        public BatchApiUtility()
         {
             Client = new RestClient(Endpoint);
-            Authorization = GetAuthorization();
+            _authToken = new Lazy<Task<string>>(Authorize);
         }
 
-        private static string GetAuthorization()
+        public Task<string> GetAuthToken()
+        {
+            return _authToken.Value;
+        }
+
+        private async Task<string> Authorize()
         {
             var request = new RestRequest("token", Method.POST);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -27,7 +36,7 @@ namespace DataPointBatchClient.Utility
             request.AddParameter("username", Properties.Settings.Default.Username);
             request.AddParameter("password", Properties.Settings.Default.Password);
 
-            var token = Client.Execute<Token>(request).Data.access_token;
+            var token = (await Client.ExecuteTaskAsync<Token>(request)).Data.access_token;
             return $"Bearer {token}";
         }
     }

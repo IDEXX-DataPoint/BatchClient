@@ -1,58 +1,61 @@
 ﻿using DataPointBatchClient.Models;
+using DataPointBatchClient.Services;
+using DataPointBatchClient.Utility;
 
 namespace DataPointBatchClient.Repositories
 {
     public class AppointmentSourceRepository : BatchSourceRepository<Appointment>
     {
-        private static string Resource { get; } = "Appointments";
-        public AppointmentSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Appointments";
+
+        public AppointmentSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class ClientSourceRepository : BatchSourceRepository<Client>
     {
-        private static string Resource { get; } = "Clients";
-        public ClientSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Clients";
+        public ClientSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class CodeSourceRepository : BatchSourceRepository<CodeModel>
     {
-        private static string Resource { get; } = "Codes";
-        public CodeSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Codes";
+        public CodeSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class InvoiceSourceRepository : BatchSourceRepository<Invoice>
     {
-        private static string Resource { get; } = "Invoices";
-        public InvoiceSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Invoices";
+        public InvoiceSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class PatientSourceRepository : BatchSourceRepository<Patient>
     {
-        private static string Resource { get; } = "Patients";
-        public PatientSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Patients";
+        public PatientSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class PrescriptionSourceRepository : BatchSourceRepository<Prescription>
     {
-        private static string Resource { get; } = "Prescriptions";
-        public PrescriptionSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Prescriptions";
+        public PrescriptionSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class ReminderSourceRepository : BatchSourceRepository<Reminder>
     {
-        private static string Resource { get; } = "Reminders";
-        public ReminderSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Reminders";
+        public ReminderSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class ResourceSourceRepository : BatchSourceRepository<Resource>
     {
-        private static string Resource { get; } = "Resources";
-        public ResourceSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Resources";
+        public ResourceSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 
     public class TransactionSourceRepository : BatchSourceRepository<Transaction>
     {
-        private static string Resource { get; } = "Transactions";
-        public TransactionSourceRepository() : base(Resource) { }
+        public override string Resource { get; } = "Transactions";
+        public TransactionSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 }

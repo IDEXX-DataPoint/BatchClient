@@ -5,7 +5,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Settings](
-	[ResourceName] [varchar](50) NOT NULL,
+	[ResourceName] [varchar](50),
 	[LastUpdated] [datetime] NULL,
  CONSTRAINT [PK_Settings_1] PRIMARY KEY CLUSTERED 
 (

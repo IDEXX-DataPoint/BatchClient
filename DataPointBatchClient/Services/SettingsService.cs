@@ -5,23 +5,30 @@ using DataPointBatchClient.Repositories;
 
 namespace DataPointBatchClient.Services
 {
-    public static class SettingsService
+    public class SettingsService
     {
-        public static async Task<string> GetLastUpdated(string resourceName)
+        private readonly SettingsRepository _settingsRepository;
+
+        public SettingsService(SettingsRepository settingsRepository)
         {
-            var settings = await SettingsRepository.Get(resourceName);
+            _settingsRepository = settingsRepository;
+        }
+
+        public async Task<string> GetLastUpdated(string resourceName)
+        {
+            var settings = await _settingsRepository.Get(resourceName);
             var date = settings?.LastUpdated;
             return date?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'") ?? string.Empty;
         }
 
-        public static void Update(string resourceName, DateTime lastUpdated)
+        public async Task Update(string resourceName, DateTime lastUpdated)
         {
             var settings = new Settings
             {
                 ResourceName = resourceName,
                 LastUpdated = lastUpdated
             };
-            SettingsRepository.Update(settings);
+            await _settingsRepository.Update(settings);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
@@ -10,23 +11,22 @@ namespace DataPointBatchClient.Repositories
 {
     public interface IBatchSourceRepository<T>
     {
-        string GetResourceType();
+        string Resource { get; }
         Task<IEnumerable<T>> GetBatchItems(int skip, CancellationToken token);
     }
 
     public abstract class BatchSourceRepository<T> : IBatchSourceRepository<T>
     {
-        private readonly string _resource;
+        private readonly BatchApiUtility _batchApiUtility;
+        private readonly SettingsService _settingsService;
 
-        protected BatchSourceRepository(string resource)
+        protected BatchSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService)
         {
-            _resource = resource;
+            _batchApiUtility = batchApiUtility;
+            _settingsService = settingsService;
         }
 
-        public string GetResourceType()
-        {
-            return _resource;
-        }
+        public abstract string Resource { get; }
 
         public async Task<IEnumerable<T>> GetBatchItems(int skip, CancellationToken token)
         {
@@ -34,7 +34,7 @@ namespace DataPointBatchClient.Repositories
 
             try
             {
-                var response = await BatchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request, token);
+                var response = await _batchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request, token);
                 return response.Data.value;
             }
             catch (OperationCanceledException)
@@ -51,9 +51,9 @@ namespace DataPointBatchClient.Repositories
 
         private async Task<RestRequest> GetRequest(int skip)
         {
-            var request = new RestRequest($"odata/{_resource}");
+            var request = new RestRequest($"odata/{Resource}");
 
-            request.AddHeader("Authorization", BatchApiUtility.Authorization);
+            request.AddHeader("Authorization", await _batchApiUtility.GetAuthToken());
             request.AddParameter("$filter", await GetFilter());
             request.AddParameter("$top", BatchApiUtility.Top);
             request.AddParameter("$skip", skip);
@@ -63,8 +63,8 @@ namespace DataPointBatchClient.Repositories
 
         private async Task<string> GetFilter()
         {
-            var siteId = Properties.Settings.Default.SiteId;
-            var lastUpdated = await SettingsService.GetLastUpdated(_resource);
+            var siteId = ConfigurationManager.AppSettings["SiteId"];
+            var lastUpdated = await _settingsService.GetLastUpdated(Resource);
 
             return string.IsNullOrEmpty(lastUpdated)
                 ? $"siteId eq {siteId}"

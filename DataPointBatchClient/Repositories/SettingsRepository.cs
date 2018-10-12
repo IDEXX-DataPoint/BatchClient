@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ namespace DataPointBatchClient.Repositories
 {
     public class SettingsRepository
     {
-        private static readonly string Query = EmbeddedResource.Get("DataPointBatchClient.Scripts.MergeSettings.sql");
+        private readonly string Query = EmbeddedResource.Get("DataPointBatchClient.Scripts.MergeSettings.sql");
 
-        public static async Task<Settings> Get(string resourceName)
+        private string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
+
+        public async Task<Settings> Get(string resourceName)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 const string sql = "SELECT * FROM Settings WHERE ResourceName = @ResourceName";
                 var result = await conn.QueryAsync<Settings>(sql, new { ResourceName = resourceName });
@@ -22,9 +25,9 @@ namespace DataPointBatchClient.Repositories
             }
         }
         
-        public static async void Update(Settings settings)
+        public async Task Update(Settings settings)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 try
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -33,8 +34,8 @@ namespace DataPointBatchClient.Utility
             var request = new RestRequest("token", Method.POST);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "password");
-            request.AddParameter("username", Properties.Settings.Default.Username);
-            request.AddParameter("password", Properties.Settings.Default.Password);
+            request.AddParameter("username", ConfigurationManager.AppSettings["Username"]);
+            request.AddParameter("password", ConfigurationManager.AppSettings["Password"]);
 
             var token = (await Client.ExecuteTaskAsync<Token>(request)).Data.access_token;
             return $"Bearer {token}";

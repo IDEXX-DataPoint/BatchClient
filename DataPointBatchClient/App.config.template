@@ -11,27 +11,12 @@
   <startup>
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1" />
   </startup>
-  <applicationSettings>
-    <DataPointBatchClient.Properties.Settings>
-      <setting name="Password" serializeAs="String">
-        <value />
-      </setting>
-      <setting name="ConnectionString" serializeAs="String">
-        <value />
-      </setting>
-      <setting name="Username" serializeAs="String">
-        <value />
-      </setting>
-      <setting name="SiteId" serializeAs="String">
-        <value />
-      </setting>
-    </DataPointBatchClient.Properties.Settings>
-  </applicationSettings>
-  <userSettings>
-    <DataPointBatchClient.Properties.Settings>
-      <setting name="LastUpdated" serializeAs="String">
-        <value />
-      </setting>
-    </DataPointBatchClient.Properties.Settings>
-  </userSettings>
+  <connectionStrings>
+    <add name="DestinationData" connectionString="Data Source=.;Initial Catalog=BatchSync;Integrated Security=True" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <appSettings>
+    <add key="SiteId" value="??"/>
+    <add key="Username" value="??"/>
+    <add key="Password" value="??"/>
+  </appSettings>
 </configuration>

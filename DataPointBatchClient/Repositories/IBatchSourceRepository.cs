@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
@@ -17,10 +18,12 @@ namespace DataPointBatchClient.Repositories
     public abstract class BatchSourceRepository<T> : IBatchSourceRepository<T>
     {
         private readonly BatchApiUtility _batchApiUtility;
+        private readonly SettingsService _settingsService;
 
-        protected BatchSourceRepository(BatchApiUtility batchApiUtility)
+        protected BatchSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService)
         {
             _batchApiUtility = batchApiUtility;
+            _settingsService = settingsService;
         }
 
         public abstract string Resource { get; }
@@ -60,8 +63,8 @@ namespace DataPointBatchClient.Repositories
 
         private async Task<string> GetFilter()
         {
-            var siteId = Properties.Settings.Default.SiteId;
-            var lastUpdated = await SettingsService.GetLastUpdated(Resource);
+            var siteId = ConfigurationManager.AppSettings["SiteId"];
+            var lastUpdated = await _settingsService.GetLastUpdated(Resource);
 
             return string.IsNullOrEmpty(lastUpdated)
                 ? $"siteId eq {siteId}"

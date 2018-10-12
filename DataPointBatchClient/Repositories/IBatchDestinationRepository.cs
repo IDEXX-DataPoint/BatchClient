@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,11 +23,13 @@ namespace DataPointBatchClient.Repositories
             Query = EmbeddedResource.Get(resourcePath);
         }
 
+        private string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
+
         public async Task<bool> MergeEntities(IEnumerable<T> entities, CancellationToken token)
         {
             var success = true;
 
-            using (var conn = new SqlConnection(Properties.Settings.Default.ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 foreach (var entity in entities)
                 {

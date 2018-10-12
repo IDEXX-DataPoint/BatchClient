@@ -73,7 +73,7 @@
     <Compile Include="Repositories\BatchSourceRepositories.cs" />
     <Content Include="Scripts\Create\CreateTableSettings.sql" />
     <EmbeddedResource Include="Scripts\MergeSettings.sql" />
-    <Compile Include="Services\DataPointBatchToSqlService.cs" />
+    <Compile Include="Services\BatchToSqlService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Utility\BatchApiUtility.cs" />
     <Compile Include="Utility\EmbeddedResource.cs" />

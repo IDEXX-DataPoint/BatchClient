@@ -59,7 +59,7 @@ namespace DataPointBatchClient
         {
             try
             {
-                var service = new DataPointBatchToSqlService(TokenSource.Token);
+                var service = new BatchToSqlService(TokenSource.Token);
                 var tasks = new[]
                 {
                     service.SyncAppointments(),

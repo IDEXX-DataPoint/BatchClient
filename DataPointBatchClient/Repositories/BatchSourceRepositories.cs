@@ -7,7 +7,6 @@ namespace DataPointBatchClient.Repositories
     public class AppointmentSourceRepository : BatchSourceRepository<Appointment>
     {
         public override string Resource { get; } = "Appointments";
-
         public AppointmentSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService) : base(batchApiUtility, settingsService) { }
     }
 

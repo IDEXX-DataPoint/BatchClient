@@ -7,17 +7,17 @@ using DataPointBatchClient.Utility;
 
 namespace DataPointBatchClient.Services
 {
-    public class DataPointBatchToSqlService
+    public class BatchToSqlService
     {
         private readonly CancellationToken _token;
         private readonly BatchApiUtility _batchApiUtility;
         private readonly SettingsService _settingsService;
 
-        public DataPointBatchToSqlService(CancellationToken token, BatchApiUtility batchApiUtility = null, SettingsService settingsService = null)
+        public BatchToSqlService(CancellationToken token, BatchApiUtility batchApiUtility = null, SettingsService settingsService = null)
         {
+            _token = token;
             _batchApiUtility = batchApiUtility ?? new BatchApiUtility();
             _settingsService = settingsService ?? new SettingsService(new SettingsRepository());
-            _token = token;
         }
 
         public async Task<bool> SyncAppointments() => await SyncEntity(new AppointmentSourceRepository(_batchApiUtility, _settingsService), new AppointmentDestinationRepository());

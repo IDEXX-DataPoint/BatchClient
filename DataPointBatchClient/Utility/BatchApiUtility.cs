@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -37,6 +38,7 @@ namespace DataPointBatchClient.Utility
             request.AddParameter("password", ConfigurationManager.AppSettings["Password"]);
 
             var result = await Client.ExecuteTaskAsync<Token>(request);
+            if (result == null) throw new AuthenticationException("Invalid credentials");
             var token = result.Data.access_token;
             return $"Bearer {token}";
         }

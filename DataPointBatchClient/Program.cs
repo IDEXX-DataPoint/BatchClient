@@ -51,7 +51,7 @@ namespace DataPointBatchClient
             {
                 await Sync(TokenSource.Token);
                 var nextTime = DateTime.Now.AddDays(1).Date.Add(schedule) - DateTime.Now;
-                await Task.Delay(nextTime);
+                await Task.Delay(nextTime, TokenSource.Token);
             }
         }
 

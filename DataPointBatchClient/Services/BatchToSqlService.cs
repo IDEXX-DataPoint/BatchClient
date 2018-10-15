@@ -9,6 +9,7 @@ namespace DataPointBatchClient.Services
 {
     public class BatchToSqlService
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly CancellationToken _token;
         private readonly BatchApiUtility _batchApiUtility;
         private readonly SettingsService _settingsService;
@@ -47,12 +48,12 @@ namespace DataPointBatchClient.Services
 
                 count = items.Count();
                 processed += count;
-                Console.WriteLine($"{type} processed: {processed}");
+                Logger.Info("{0} processed: {1}", type, processed);
 
             } while (count == BatchApiUtility.Top);
 
             await _settingsService.Update(type, startTime);
-            Console.WriteLine($"{type} complete");
+            Logger.Info("{0} complete", type);
             return true;
         }
     }

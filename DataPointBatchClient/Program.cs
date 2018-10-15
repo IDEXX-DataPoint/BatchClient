@@ -32,6 +32,7 @@ namespace DataPointBatchClient
 
     public class BatchProcessAsync
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private static readonly CancellationTokenSource TokenSource = new CancellationTokenSource();
 
         public void Start()
@@ -78,11 +79,11 @@ namespace DataPointBatchClient
             }
             catch (OperationCanceledException)
             {
-                Console.WriteLine("Sync cancelled");
+                Logger.Info("Cancellation exception caught in Program.Sync()");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Logger.Error(e);
             }
         }
 
@@ -92,8 +93,8 @@ namespace DataPointBatchClient
 
             if (tasks.Any(x => !x.Result))
                 message += " with error(s)";
-
-            Console.WriteLine(message);
+            
+            Logger.Info(message);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace DataPointBatchClient.Repositories
 
     public abstract class BatchSourceRepository<T> : IBatchSourceRepository<T>
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly BatchApiUtility _batchApiUtility;
         private readonly SettingsService _settingsService;
 
@@ -39,11 +40,11 @@ namespace DataPointBatchClient.Repositories
             }
             catch (OperationCanceledException)
             {
-                Console.WriteLine("Cancellation requested");
+                Logger.Info("Cancellation invoked during request");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Logger.Error(e);
             }
 
             return new List<T>();

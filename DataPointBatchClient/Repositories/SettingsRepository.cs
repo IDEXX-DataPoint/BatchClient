@@ -12,7 +12,7 @@ namespace DataPointBatchClient.Repositories
     public class SettingsRepository
     {
         private readonly string Query = EmbeddedResource.Get("DataPointBatchClient.Scripts.MergeSettings.sql");
-
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
 
         public async Task<Settings> Get(string resourceName)
@@ -35,8 +35,7 @@ namespace DataPointBatchClient.Repositories
                 }
                 catch (SqlException e)
                 {
-                    // todo handle exception
-                    Console.WriteLine(e);
+                    Logger.Error(e);
                 }
             }
         }

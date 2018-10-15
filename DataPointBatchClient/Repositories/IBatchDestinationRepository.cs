@@ -23,6 +23,7 @@ namespace DataPointBatchClient.Repositories
             Query = EmbeddedResource.Get(resourcePath);
         }
 
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
 
         public async Task<bool> MergeEntities(IEnumerable<T> entities, CancellationToken token)
@@ -42,7 +43,7 @@ namespace DataPointBatchClient.Repositories
                     }
                     catch (SqlException e)
                     {
-                        Console.WriteLine(e);
+                        Logger.Error(e);
                         success = false;
                     }
                 }

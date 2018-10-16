@@ -11,7 +11,7 @@ CREATE TABLE [dbo].[Appointment](
     [clientPimsIdentifier] [nvarchar](50) NULL,
     [patientPimsId] [nvarchar](50) NULL,
     [patientPimsIdentifier] [nvarchar](50) NULL,
-    [datetime] [datetime] NULL,
+    [date] [datetime] NULL,
     [duration] [int] NULL,
     [units] [int] NULL,
     [unitLength] [int] NULL,

@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[Resource](
     [postalCode] [nvarchar](50) NULL,
     [classId] [nvarchar](50) NULL,
     [license] [nvarchar](50) NULL,
-    [note] [nvarchar](50) NULL,
+    [note] [nvarchar](max) NULL,
     [status] [nvarchar](50) NULL,
     [locationId] [nvarchar](50) NULL,
     [dpUid] [uniqueidentifier] NOT NULL,

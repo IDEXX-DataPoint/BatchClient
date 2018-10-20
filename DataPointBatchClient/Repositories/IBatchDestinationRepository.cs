@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -46,6 +46,7 @@ namespace DataPointBatchClient.Repositories
                     }
                     catch (SqlException e)
                     {
+                        Logger.Info("{0}{1}{0}{2}", Environment.NewLine, entity.ToString(), Serialize(entity));
                         Logger.Error(e);
                         success = false;
                     }
@@ -53,6 +54,15 @@ namespace DataPointBatchClient.Repositories
             }
 
             return success;
+        }
+
+        private static string Serialize(object entity)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+            return JsonConvert.SerializeObject(entity, Formatting.Indented, settings);
         }
     }
 }

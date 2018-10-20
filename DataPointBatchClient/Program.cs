@@ -108,7 +108,9 @@ namespace DataPointBatchClient
                 };
 
                 await Task.WhenAll(tasks);
-                ValidateSuccess(tasks);
+
+                Logger.Info($"Site: {siteId} all tasks complete" +
+                            (tasks.Any(x => !x.Result) ? " with error(s)" : string.Empty));
             }
             catch (OperationCanceledException)
             {
@@ -118,16 +120,6 @@ namespace DataPointBatchClient
             {
                 Logger.Error(e);
             }
-        }
-
-        private static void ValidateSuccess(IEnumerable<Task<bool>> tasks)
-        {
-            var message = "All tasks complete";
-
-            if (tasks.Any(x => !x.Result))
-                message += " with error(s)";
-            
-            Logger.Info(message);
         }
     }
 }

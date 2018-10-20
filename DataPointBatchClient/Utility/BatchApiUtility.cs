@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using DataPointBatchClient.Models;
 using RestSharp;
 
 namespace DataPointBatchClient.Utility
@@ -16,12 +19,29 @@ namespace DataPointBatchClient.Utility
         private const string Endpoint = "https://io.datapointapi.com";
 
         public RestClient Client { get; }
-        private Lazy<Task<string>> _authToken;
+        private readonly Lazy<Task<List<string>>> _siteIdList;
+        private readonly Lazy<Task<string>> _authToken;
 
         public BatchApiUtility()
         {
             Client = new RestClient(Endpoint);
+            _siteIdList = new Lazy<Task<List<string>>>(InitializeSiteIdList);
             _authToken = new Lazy<Task<string>>(Authorize);
+        }
+
+        public Task<List<string>> GetSiteIdList()
+        {
+            return _siteIdList.Value;
+        }
+
+        private async Task<List<string>> InitializeSiteIdList()
+        {
+            var slug = ConfigurationManager.AppSettings["GroupName"];
+            var request = new RestRequest($"api/sites/{slug}");
+            request.AddHeader("Authorization", await GetAuthToken());
+            var result = await Client.ExecuteTaskAsync<List<Site>>(request);
+            if (result == null) throw new NullReferenceException("Empty SiteId list");
+            return (from site in result.Data select site.Id).ToList();
         }
 
         public Task<string> GetAuthToken()

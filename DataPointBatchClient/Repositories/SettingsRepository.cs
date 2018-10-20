@@ -10,16 +10,16 @@ namespace DataPointBatchClient.Repositories
 {
     public class SettingsRepository
     {
-        private readonly string Query = EmbeddedResource.Get("DataPointBatchClient.Scripts.MergeSettings.sql");
+        private readonly string _query = EmbeddedResource.Get("DataPointBatchClient.Scripts.MergeSettings.sql");
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
+        private static string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
 
-        public async Task<Settings> Get(string resourceName)
+        public async Task<Settings> Get(string siteId, string resourceName)
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                const string sql = "SELECT * FROM Settings WHERE ResourceName = @ResourceName";
-                var result = await conn.QueryAsync<Settings>(sql, new { ResourceName = resourceName });
+                const string sql = "select * from Settings where SiteId = @SiteId and ResourceName = @ResourceName";
+                var result = await conn.QueryAsync<Settings>(sql, new { SiteId = siteId, ResourceName = resourceName });
                 return result.FirstOrDefault();
             }
         }
@@ -30,7 +30,7 @@ namespace DataPointBatchClient.Repositories
             {
                 try
                 {
-                    await conn.ExecuteAsync(Query, settings);
+                    await conn.ExecuteAsync(_query, settings);
                 }
                 catch (SqlException e)
                 {

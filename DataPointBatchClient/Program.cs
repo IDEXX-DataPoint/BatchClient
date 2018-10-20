@@ -1,9 +1,11 @@
 using System;
-using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
+using DataPointBatchClient.Utility;
 using Topshelf;
 
 namespace DataPointBatchClient
@@ -37,7 +39,10 @@ namespace DataPointBatchClient
 
         public void Start()
         {
-            Task.Run(StartJob);
+            if (SqlConnectionValid())
+            {
+                Task.Run(StartJob);
+            }
         }
 
         public void Stop()
@@ -45,22 +50,50 @@ namespace DataPointBatchClient
             TokenSource.Cancel();
         }
 
+        private static bool SqlConnectionValid()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
+            using (var conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Logger.Fatal(e);
+                    return false;
+                }
+            }
+        }
+
         private static async Task StartJob()
         {
+            // todo config validation
             var hours = new TimeSpan(2, 0, 0); // 2 hours
             while (true)
             {
-                await Sync();
+                await SyncSites();
                 var nextTime = DateTime.Now.Date.AddDays(1).Add(hours) - DateTime.Now;
                 await Task.Delay(nextTime);
             }
         }
 
-        private static async Task Sync()
+        private static async Task SyncSites()
+        {
+            var siteIdList = await new BatchApiUtility().GetSiteIdList();
+            foreach (var siteId in siteIdList)
+            {
+                await SyncSite(siteId);
+            }
+        }
+
+        private static async Task SyncSite(string siteId)
         {
             try
             {
-                var service = new BatchToSqlService(TokenSource.Token);
+                var service = new BatchToSqlService(siteId, TokenSource.Token);
                 var tasks = new[]
                 {
                     service.SyncAppointments(),

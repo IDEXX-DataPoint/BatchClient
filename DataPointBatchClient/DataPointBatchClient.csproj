@@ -61,6 +61,7 @@
     <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\Site.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

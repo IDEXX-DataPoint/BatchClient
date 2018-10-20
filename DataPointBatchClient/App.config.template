@@ -15,7 +15,7 @@
     <add name="DestinationData" connectionString="Data Source=.;Initial Catalog=MyDatabase;Integrated Security=True"/>
   </connectionStrings>
   <appSettings>
-    <add key="SiteId" value="??"/>
+    <add key="GroupName" value="??"/>
     <add key="Username" value="??"/>
     <add key="Password" value="??"/>
   </appSettings>

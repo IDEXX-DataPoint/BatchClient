@@ -5,10 +5,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Settings](
-	[ResourceName] [varchar](50),
+	[SiteId] [varchar](50) NOT NULL,
+	[ResourceName] [varchar](50) NOT NULL,
 	[LastUpdated] [datetime] NULL,
- CONSTRAINT [PK_Settings_1] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Settings] PRIMARY KEY CLUSTERED 
 (
+	[SiteId] ASC,
 	[ResourceName] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]

@@ -14,17 +14,18 @@ namespace DataPointBatchClient.Services
             _settingsRepository = settingsRepository;
         }
 
-        public async Task<string> GetLastUpdated(string resourceName)
+        public async Task<string> GetLastUpdated(string siteId, string resourceName)
         {
-            var settings = await _settingsRepository.Get(resourceName);
+            var settings = await _settingsRepository.Get(siteId, resourceName);
             var date = settings?.LastUpdated;
             return date?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'") ?? string.Empty;
         }
 
-        public async Task Update(string resourceName, DateTime lastUpdated)
+        public async Task Update(string siteId, string resourceName, DateTime lastUpdated)
         {
             var settings = new Settings
             {
+                SiteId = siteId,
                 ResourceName = resourceName,
                 LastUpdated = lastUpdated
             };

@@ -1,15 +1,19 @@
 ﻿MERGE dbo.Settings AS target
-USING (SELECT @ResourceName
+USING (SELECT @SiteId
+    ,@ResourceName
     ,@LastUpdated)
-AS source (ResourceName
+AS source (SiteId
+    ,ResourceName
     ,LastUpdated)
-ON (target.ResourceName = source.ResourceName)
+ON (target.SiteId = source.SiteId and target.ResourceName = source.ResourceName)
 
 WHEN MATCHED
 THEN UPDATE SET LastUpdated = source.LastUpdated
 
 WHEN NOT MATCHED
-THEN INSERT (ResourceName
+THEN INSERT (SiteId
+    ,ResourceName
     ,LastUpdated)
-VALUES (source.ResourceName
+VALUES (source.SiteId
+    ,source.ResourceName
     ,source.LastUpdated);

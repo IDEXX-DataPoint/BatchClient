@@ -1,31 +1,35 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using DataPointBatchClient.Utility;
+using Newtonsoft.Json;
 
 namespace DataPointBatchClient.Repositories
 {
     public interface IBatchDestinationRepository<in T>
     {
-        Task<bool> MergeEntities(IEnumerable<T> entities, CancellationToken token);
+        Task<bool> MergeEntities(IEnumerable<T> entities);
     }
 
     public abstract class BatchDestinationRepository<T> : IBatchDestinationRepository<T>
     {
         protected string Query;
+        private readonly CancellationToken _token;
 
-        protected BatchDestinationRepository(string resourcePath)
+        protected BatchDestinationRepository(string resourcePath, CancellationToken token)
         {
             Query = EmbeddedResource.Get(resourcePath);
+            _token = token;
         }
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
+        private static string ConnectionString => ConfigurationManager.ConnectionStrings["DestinationData"].ConnectionString;
 
-        public async Task<bool> MergeEntities(IEnumerable<T> entities, CancellationToken token)
+        public async Task<bool> MergeEntities(IEnumerable<T> entities)
         {
             var success = true;
 
@@ -33,7 +37,7 @@ namespace DataPointBatchClient.Repositories
             {
                 foreach (var entity in entities)
                 {
-                    if (token.IsCancellationRequested) return false;
+                    if (_token.IsCancellationRequested) return false;
 
                     try
                     {

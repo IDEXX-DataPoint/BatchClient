@@ -10,26 +10,28 @@ namespace DataPointBatchClient.Services
     public class BatchToSqlService
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly string _siteId;
         private readonly CancellationToken _token;
         private readonly BatchApiUtility _batchApiUtility;
         private readonly SettingsService _settingsService;
 
-        public BatchToSqlService(CancellationToken token, BatchApiUtility batchApiUtility = null, SettingsService settingsService = null)
+        public BatchToSqlService(string siteId, CancellationToken token, BatchApiUtility batchApiUtility = null, SettingsService settingsService = null)
         {
+            _siteId = siteId;
             _token = token;
             _batchApiUtility = batchApiUtility ?? new BatchApiUtility();
             _settingsService = settingsService ?? new SettingsService(new SettingsRepository());
         }
 
-        public async Task<bool> SyncAppointments() => await SyncEntity(new AppointmentSourceRepository(_batchApiUtility, _settingsService), new AppointmentDestinationRepository());
-        public async Task<bool> SyncClients() => await SyncEntity(new ClientSourceRepository(_batchApiUtility, _settingsService), new ClientDestinationRepository());
-        public async Task<bool> SyncCodes() => await SyncEntity(new CodeSourceRepository(_batchApiUtility, _settingsService), new CodeDestinationRepository());
-        public async Task<bool> SyncInvoices() => await SyncEntity(new InvoiceSourceRepository(_batchApiUtility, _settingsService), new InvoiceDestinationRepository());
-        public async Task<bool> SyncPatients() => await SyncEntity(new PatientSourceRepository(_batchApiUtility, _settingsService), new PatientDestinationRepository());
-        public async Task<bool> SyncPrescriptions() => await SyncEntity(new PrescriptionSourceRepository(_batchApiUtility, _settingsService), new PrescriptionDestinationRepository());
-        public async Task<bool> SyncReminders() => await SyncEntity(new ReminderSourceRepository(_batchApiUtility, _settingsService), new ReminderDestinationRepository());
-        public async Task<bool> SyncResources() => await SyncEntity(new ResourceSourceRepository(_batchApiUtility, _settingsService), new ResourceDestinationRepository());
-        public async Task<bool> SyncTransactions() => await SyncEntity(new TransactionSourceRepository(_batchApiUtility, _settingsService), new TransactionDestinationRepository());
+        public async Task<bool> SyncAppointments() => await SyncEntity(new AppointmentSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new AppointmentDestinationRepository(_token));
+        public async Task<bool> SyncClients() => await SyncEntity(new ClientSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new ClientDestinationRepository(_token));
+        public async Task<bool> SyncCodes() => await SyncEntity(new CodeSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new CodeDestinationRepository(_token));
+        public async Task<bool> SyncInvoices() => await SyncEntity(new InvoiceSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new InvoiceDestinationRepository(_token));
+        public async Task<bool> SyncPatients() => await SyncEntity(new PatientSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new PatientDestinationRepository(_token));
+        public async Task<bool> SyncPrescriptions() => await SyncEntity(new PrescriptionSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new PrescriptionDestinationRepository(_token));
+        public async Task<bool> SyncReminders() => await SyncEntity(new ReminderSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new ReminderDestinationRepository(_token));
+        public async Task<bool> SyncResources() => await SyncEntity(new ResourceSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new ResourceDestinationRepository(_token));
+        public async Task<bool> SyncTransactions() => await SyncEntity(new TransactionSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new TransactionDestinationRepository(_token));
 
         private async Task<bool> SyncEntity<T>(IBatchSourceRepository<T> sourceRepo, IBatchDestinationRepository<T> destinationRepo)
         {
@@ -42,18 +44,18 @@ namespace DataPointBatchClient.Services
             do
             {
                 var skip = processed;
-                var items = await sourceRepo.GetBatchItems(skip, _token);
-                var success = await destinationRepo.MergeEntities(items, _token);
+                var items = await sourceRepo.GetBatchItems(skip);
+                var success = await destinationRepo.MergeEntities(items);
                 if (_token.IsCancellationRequested || !success) return false;
 
                 count = items.Count();
                 processed += count;
-                Logger.Info("{0} processed: {1}", type, processed);
+                Logger.Trace("{0} processed: {1}", type, processed);
 
             } while (count == BatchApiUtility.Top);
 
-            await _settingsService.Update(type, startTime);
-            Logger.Info("{0} complete", type);
+            await _settingsService.Update(_siteId, type, startTime);
+            Logger.Trace("{0} complete", type);
             return true;
         }
     }

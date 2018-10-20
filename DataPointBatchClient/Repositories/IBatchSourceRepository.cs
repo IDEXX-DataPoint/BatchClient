@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using DataPointBatchClient.Services;
@@ -12,39 +11,43 @@ namespace DataPointBatchClient.Repositories
     public interface IBatchSourceRepository<T>
     {
         string Resource { get; }
-        Task<IEnumerable<T>> GetBatchItems(int skip, CancellationToken token);
+        Task<IEnumerable<T>> GetBatchItems(int skip);
     }
 
     public abstract class BatchSourceRepository<T> : IBatchSourceRepository<T>
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly string _siteId;
+        private readonly CancellationToken _token;
         private readonly BatchApiUtility _batchApiUtility;
         private readonly SettingsService _settingsService;
 
-        protected BatchSourceRepository(BatchApiUtility batchApiUtility, SettingsService settingsService)
+        protected BatchSourceRepository(string siteId, CancellationToken token, BatchApiUtility batchApiUtility, SettingsService settingsService)
         {
+            _siteId = siteId;
+            _token = token;
             _batchApiUtility = batchApiUtility;
             _settingsService = settingsService;
         }
 
         public abstract string Resource { get; }
 
-        public async Task<IEnumerable<T>> GetBatchItems(int skip, CancellationToken token)
+        public async Task<IEnumerable<T>> GetBatchItems(int skip)
         {
             var request = await GetRequest(skip);
 
             try
             {
-                var response = await _batchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request, token);
+                var response = await _batchApiUtility.Client.ExecuteTaskAsync<BatchResponse<T>>(request, _token);
                 return response.Data.value;
             }
             catch (OperationCanceledException)
             {
-                Logger.Info("Cancellation invoked during request");
+                _logger.Info("Cancellation invoked during request");
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                _logger.Error(e);
             }
 
             return new List<T>();
@@ -64,12 +67,10 @@ namespace DataPointBatchClient.Repositories
 
         private async Task<string> GetFilter()
         {
-            var siteId = ConfigurationManager.AppSettings["SiteId"];
-            var lastUpdated = await _settingsService.GetLastUpdated(Resource);
-
+            var lastUpdated = await _settingsService.GetLastUpdated(_siteId, Resource);
             return string.IsNullOrEmpty(lastUpdated)
-                ? $"siteId eq {siteId}"
-                : $"siteId eq {siteId} and dpModifiedDate gt {lastUpdated}";
+                ? $"siteId eq {_siteId}"
+                : $"siteId eq {_siteId} and dpModifiedDate gt {lastUpdated}";
         }
     }
 

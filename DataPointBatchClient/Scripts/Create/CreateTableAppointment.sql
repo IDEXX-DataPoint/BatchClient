@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[Appointment](
     [status] [nvarchar](50) NULL,
     [room] [nvarchar](50) NULL,
     [reason] [nvarchar](50) NULL,
-    [notes] [nvarchar](50) NULL,
+    [notes] [nvarchar](max) NULL,
     [resourceId] [nvarchar](50) NULL,
     [resourceName] [nvarchar](50) NULL,
     [locationId] [nvarchar](50) NULL,

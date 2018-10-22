@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[Client](
     [phone2] [nvarchar](50) NULL,
     [phoneName3] [nvarchar](50) NULL,
     [phone3] [nvarchar](50) NULL,
-    [email] [nvarchar](50) NULL,
+    [email] [nvarchar](255) NULL,
     [pimsClientIdentifier] [nvarchar](50) NULL,
     [referralSource] [nvarchar](50) NULL,
     [dpUid] [uniqueidentifier] NOT NULL,

@@ -4,11 +4,12 @@
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1" />
   </startup>
   <connectionStrings>
-    <add name="DestinationData" connectionString="Data Source=.;Initial Catalog=??;Integrated Security=True"/>
+    <!--<add name="DestinationData" connectionString="Data Source=.;Initial Catalog={{Database}};MultipleActiveResultSets=True;Integrated Security=True"/>-->
+    <add name="DestinationData" connectionString="Data Source=.;Initial Catalog={{Database}};MultipleActiveResultSets=True;User Id={{DatabaseUsername}};Password={{DatabasePassword}}"/>
   </connectionStrings>
   <appSettings>
-    <add key="GroupName" value="??"/>
-    <add key="Username" value="??"/>
-    <add key="Password" value="??"/>
+    <add key="GroupName" value="{{GroupName}}"/>
+    <add key="Username" value="{{TokenUsername}}"/>
+    <add key="Password" value="{{TokenPassword}}"/>
   </appSettings>
 </configuration>

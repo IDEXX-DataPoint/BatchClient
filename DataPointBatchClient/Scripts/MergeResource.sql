@@ -1,144 +1,164 @@
 ﻿MERGE dbo.Resource AS target
-USING (SELECT @abbreviation
-    ,@lastName
-    ,@firstName
-    ,@middleName
-    ,@title
-    ,@address1
-    ,@address2
-    ,@city
-    ,@state
-    ,@postalCode
-    ,@classId
-    ,@license
-    ,@note
-    ,@status
-    ,@locationId
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (abbreviation
-    ,lastName
-    ,firstName
-    ,middleName
-    ,title
-    ,address1
-    ,address2
-    ,city
-    ,state
-    ,postalCode
-    ,classId
-    ,license
-    ,note
-    ,status
-    ,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @Abbreviation
+    ,@LastName
+    ,@FirstName
+    ,@MiddleName
+    ,@Title
+    ,@Address1
+    ,@Address2
+    ,@City
+    ,@State
+    ,@PostalCode
+    ,@ClassId
+    ,@License
+    ,@Inactive
+    ,@DeletePimsId
+    ,@Note
+    ,@Status
+    ,@LocationId
+    ,@DpStatus
+    ,@DpStatusDescription
+    ,@DpUid
+    ,@PimsId
+    ,@SiteId
+    ,@AgentVersion
+    ,@Action
+    ,@DpCreatedDate
+    ,@DpModifiedDate
+    ,@SyncDate
+    ,@CorrelationId
+    ,@LastModifiedByCorrelationId
+    ,@Generation
+    ,@Deleted)
+AS source (Abbreviation
+    ,LastName
+    ,FirstName
+    ,MiddleName
+    ,Title
+    ,Address1
+    ,Address2
+    ,City
+    ,State
+    ,PostalCode
+    ,ClassId
+    ,License
+    ,Inactive
+    ,DeletePimsId
+    ,Note
+    ,Status
+    ,LocationId
+    ,DpStatus
+    ,DpStatusDescription
+    ,DpUid
+    ,PimsId
+    ,SiteId
+    ,AgentVersion
+    ,Action
+    ,DpCreateDate
+    ,DpModifiedDate
+    ,SyncDate
+    ,CorrelationId
+    ,LastModifiedByCorrelationId
+    ,Generation
+    ,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET abbreviation = source.abbreviation
-    ,lastName = source.lastName
-    ,firstName = source.firstName
-    ,middleName = source.middleName
-    ,title = source.title
-    ,address1 = source.address1
-    ,address2 = source.address2
-    ,city = source.city
-    ,state = source.state
-    ,postalCode = source.postalCode
-    ,classId = source.classId
-    ,license = source.license
-    ,note = source.note
-    ,status = source.status
-    ,locationId = source.locationId
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET Abbreviation = source.Abbreviation
+    ,LastName = source.LastName
+    ,FirstName = source.FirstName
+    ,MiddleName = source.MiddleName
+    ,Title = source.Title
+    ,Address1 = source.Address1
+    ,Address2 = source.Address2
+    ,City = source.City
+    ,State = source.State
+    ,PostalCode = source.PostalCode
+    ,ClassId = source.ClassId
+    ,License = source.License
+    ,Inactive = source.Inactive
+    ,DeletePimsId = source.DeletePimsId
+    ,Note = source.Note
+    ,Status = source.Status
+    ,LocationId = source.LocationId
+    ,DpStatus = source.DpStatus
+    ,DpStatusDescription = source.DpStatusDescription
+    --,DpUid = source.DpUid
+    ,PimsId = source.PimsId
+    ,SiteId = source.SiteId
+    ,AgentVersion = source.AgentVersion
+    ,Action = source.Action
+    ,DpCreateDate = source.DpCreateDate
+    ,DpModifiedDate = source.DpModifiedDate
+    ,SyncDate = source.SyncDate
+    ,CorrelationId = source.CorrelationId
+    ,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+    ,Generation = source.Generation
+    ,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (abbreviation
-    ,lastName
-    ,firstName
-    ,middleName
-    ,title
-    ,address1
-    ,address2
-    ,city
-    ,state
-    ,postalCode
-    ,classId
-    ,license
-    ,note
-    ,status
-    ,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.abbreviation
-    ,source.lastName
-    ,source.firstName
-    ,source.middleName
-    ,source.title
-    ,source.address1
-    ,source.address2
-    ,source.city
-    ,source.state
-    ,source.postalCode
-    ,source.classId
-    ,source.license
-    ,source.note
-    ,source.status
-    ,source.locationId
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (Abbreviation
+    ,LastName
+    ,FirstName
+    ,MiddleName
+    ,Title
+    ,Address1
+    ,Address2
+    ,City
+    ,State
+    ,PostalCode
+    ,ClassId
+    ,License
+    ,Inactive
+    ,DeletePimsId
+    ,Note
+    ,Status
+    ,LocationId
+    ,DpStatus
+    ,DpStatusDescription
+    ,DpUid
+    ,PimsId
+    ,SiteId
+    ,AgentVersion
+    ,Action
+    ,DpCreateDate
+    ,DpModifiedDate
+    ,SyncDate
+    ,CorrelationId
+    ,LastModifiedByCorrelationId
+    ,Generation
+    ,Deleted)
+VALUES (source.Abbreviation
+    ,source.LastName
+    ,source.FirstName
+    ,source.MiddleName
+    ,source.Title
+    ,source.Address1
+    ,source.Address2
+    ,source.City
+    ,source.State
+    ,source.PostalCode
+    ,source.ClassId
+    ,source.License
+    ,source.Inactive
+    ,source.DeletePimsId
+    ,source.Note
+    ,source.Status
+    ,source.LocationId
+    ,source.DpStatus
+    ,source.DpStatusDescription
+    ,source.DpUid
+    ,source.PimsId
+    ,source.SiteId
+    ,source.AgentVersion
+    ,source.Action
+    ,source.DpCreateDate
+    ,source.DpModifiedDate
+    ,source.SyncDate
+    ,source.CorrelationId
+    ,source.LastModifiedByCorrelationId
+    ,source.Generation
+    ,source.Deleted);

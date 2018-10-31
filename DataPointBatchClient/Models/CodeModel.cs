@@ -8,7 +8,7 @@
         public string CategoryCode { get; set; }
         public string CategoryDescription { get; set; }
         public double? BasePrice { get; set; }
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
         public string LocationId { get; set; }
         public string InvoiceDescription { get; set; }
         public double? UnitCost { get; set; }

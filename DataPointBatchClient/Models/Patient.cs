@@ -13,10 +13,11 @@ namespace DataPointBatchClient.Models
         public string ColorId { get; set; }
         public string MicrochipId { get; set; }
         public string ColorDescription { get; set; }
+        public DateTime? PimsCreatedDate { get; set; }
         public DateTime? DateOfDeath { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public bool? SpayedOrNeutered { get; set; }
-        public bool? Inactive { get; set; }
+        public bool SpayedOrNeutered { get; set; }
+        public bool Inactive { get; set; }
         public double? Weight { get; set; }
         public string WeightUnit { get; set; }
         public string WeightUnitDescription { get; set; }

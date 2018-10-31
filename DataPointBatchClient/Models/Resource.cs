@@ -1,4 +1,6 @@
-﻿namespace DataPointBatchClient.Models
+﻿using System;
+
+namespace DataPointBatchClient.Models
 {
     public class Resource : BatchBase
     {
@@ -14,8 +16,12 @@
         public string PostalCode { get; set; }
         public string ClassId { get; set; }
         public string License { get; set; }
+        public bool Inactive { get; set; }
+        public Guid DeletePimsId { get; set; }
         public string Note { get; set; }
         public string Status { get; set; }
         public string LocationId { get; set; }
+        public int? DpStatus { get; set; }
+        public string DpStatusDescription { get; set; }
     }
 }

@@ -6,10 +6,11 @@ namespace DataPointBatchClient.Models
     {
         public string InvoiceId { get; set; }
         public string Type { get; set; }
+        public string TypeDescription { get; set; }
         public string ClientPimsId { get; set; }
         public string PatientPimsId { get; set; }
         public DateTime? TransactionDate { get; set; }
-        public double? Sequence { get; set; }
+        public double Sequence { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
         public double? Quantity { get; set; }
@@ -17,9 +18,9 @@ namespace DataPointBatchClient.Models
         public double? Discount { get; set; }
         public double? Tax { get; set; }
         public double? DispensingFee { get; set; }
-        public bool? IsPosted { get; set; }
-        public bool? IsPayment { get; set; }
-        public bool? IsVoided { get; set; }
+        public bool IsPosted { get; set; }
+        public bool IsPayment { get; set; }
+        public bool IsVoided { get; set; }
         public string ProviderId { get; set; }
         public string EnteredById { get; set; }
         public string Comments { get; set; }

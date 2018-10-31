@@ -1,194 +1,199 @@
 ﻿MERGE dbo.[Transaction] AS target
-USING (SELECT @invoiceId
-    ,@type
-    ,@clientPimsId
-    ,@patientPimsId
-    ,@transactionDate
-    ,@sequence
-    ,@code
-    ,@description
-    ,@quantity
-    ,@amount
-    ,@discount
-    ,@tax
-    ,@dispensingFee
-    ,@isPosted
-    ,@isPayment
-    ,@isVoided
-    ,@providerId
-    ,@enteredById
-    ,@comments
-    ,@locationId
-    ,@normalizedCategory
-    ,@revenueClassId
-    ,@revenueGroupId
-    ,@revenueTypeId
-    ,@revenueSubTypeId
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (invoiceId
-    ,type
-    ,clientPimsId
-    ,patientPimsId
-    ,transactionDate
-    ,sequence
-    ,code
-    ,description
-    ,quantity
-    ,amount
-    ,discount
-    ,tax
-    ,dispensingFee
-    ,isPosted
-    ,isPayment
-    ,isVoided
-    ,providerId
-    ,enteredById
-    ,comments
-    ,locationId
-    ,normalizedCategory
-    ,revenueClassId
-    ,revenueGroupId
-    ,revenueTypeId
-    ,revenueSubTypeId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @InvoiceId
+    ,@Type
+	,@TypeDescription
+    ,@ClientPimsId
+    ,@PatientPimsId
+    ,@TransactionDate
+    ,@Sequence
+    ,@Code
+    ,@Description
+    ,@Quantity
+    ,@Amount
+    ,@Discount
+    ,@Tax
+    ,@DispensingFee
+    ,@IsPosted
+    ,@IsPayment
+    ,@IsVoided
+    ,@ProviderId
+    ,@EnteredById
+    ,@Comments
+    ,@LocationId
+    ,@NormalizedCategory
+    ,@RevenueClassId
+    ,@RevenueGroupId
+    ,@RevenueTypeId
+    ,@RevenueSubTypeId
+	,@DpUid
+	,@PimsId
+	,@SiteId
+	,@AgentVersion
+	,@Action
+	,@DpCreatedDate
+	,@DpModifiedDate
+	,@SyncDate
+	,@CorrelationId
+	,@LastModifiedByCorrelationId
+	,@Generation
+	,@Deleted)
+AS source (InvoiceId
+    ,Type
+	,TypeDescription
+    ,ClientPimsId
+    ,PatientPimsId
+    ,TransactionDate
+    ,Sequence
+    ,Code
+    ,Description
+    ,Quantity
+    ,Amount
+    ,Discount
+    ,Tax
+    ,DispensingFee
+    ,IsPosted
+    ,IsPayment
+    ,IsVoided
+    ,ProviderId
+    ,EnteredById
+    ,Comments
+    ,LocationId
+    ,NormalizedCategory
+    ,RevenueClassId
+    ,RevenueGroupId
+    ,RevenueTypeId
+    ,RevenueSubTypeId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET invoiceId = source.invoiceId
-    ,type = source.type
-    ,clientPimsId = source.clientPimsId
-    ,patientPimsId = source.patientPimsId
-    ,transactionDate = source.transactionDate
-    ,sequence = source.sequence
-    ,code = source.code
-    ,description = source.description
-    ,quantity = source.quantity
-    ,amount = source.amount
-    ,discount = source.discount
-    ,tax = source.tax
-    ,dispensingFee = source.dispensingFee
-    ,isPosted = source.isPosted
-    ,isPayment = source.isPayment
-    ,isVoided = source.isVoided
-    ,providerId = source.providerId
-    ,enteredById = source.enteredById
-    ,comments = source.comments
-    ,locationId = source.locationId
-    ,normalizedCategory = source.normalizedCategory
-    ,revenueClassId = source.revenueClassId
-    ,revenueGroupId = source.revenueGroupId
-    ,revenueTypeId = source.revenueTypeId
-    ,revenueSubTypeId = source.revenueSubTypeId
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET InvoiceId = source.InvoiceId
+    ,Type = source.Type
+	,TypeDescription = source.TypeDescription
+    ,ClientPimsId = source.ClientPimsId
+    ,PatientPimsId = source.PatientPimsId
+    ,TransactionDate = source.TransactionDate
+    ,Sequence = source.Sequence
+    ,Code = source.Code
+    ,Description = source.Description
+    ,Quantity = source.Quantity
+    ,Amount = source.Amount
+    ,Discount = source.Discount
+    ,Tax = source.Tax
+    ,DispensingFee = source.DispensingFee
+    ,IsPosted = source.IsPosted
+    ,IsPayment = source.IsPayment
+    ,IsVoided = source.IsVoided
+    ,ProviderId = source.ProviderId
+    ,EnteredById = source.EnteredById
+    ,Comments = source.Comments
+    ,LocationId = source.LocationId
+    ,NormalizedCategory = source.NormalizedCategory
+    ,RevenueClassId = source.RevenueClassId
+    ,RevenueGroupId = source.RevenueGroupId
+    ,RevenueTypeId = source.RevenueTypeId
+    ,RevenueSubTypeId = source.RevenueSubTypeId
+	--,DpUid = source.DpUid
+	,PimsId = source.PimsId
+	,SiteId = source.SiteId
+	,AgentVersion = source.AgentVersion
+	,Action = source.Action
+	,DpCreateDate = source.DpCreateDate
+	,DpModifiedDate = source.DpModifiedDate
+	,SyncDate = source.SyncDate
+	,CorrelationId = source.CorrelationId
+	,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+	,Generation = source.Generation
+	,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (invoiceId
-    ,type
-    ,clientPimsId
-    ,patientPimsId
-    ,transactionDate
-    ,sequence
-    ,code
-    ,description
-    ,quantity
-    ,amount
-    ,discount
-    ,tax
-    ,dispensingFee
-    ,isPosted
-    ,isPayment
-    ,isVoided
-    ,providerId
-    ,enteredById
-    ,comments
-    ,locationId
-    ,normalizedCategory
-    ,revenueClassId
-    ,revenueGroupId
-    ,revenueTypeId
-    ,revenueSubTypeId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.invoiceId
-    ,source.type
-    ,source.clientPimsId
-    ,source.patientPimsId
-    ,source.transactionDate
-    ,source.sequence
-    ,source.code
-    ,source.description
-    ,source.quantity
-    ,source.amount
-    ,source.discount
-    ,source.tax
-    ,source.dispensingFee
-    ,source.isPosted
-    ,source.isPayment
-    ,source.isVoided
-    ,source.providerId
-    ,source.enteredById
-    ,source.comments
-    ,source.locationId
-    ,source.normalizedCategory
-    ,source.revenueClassId
-    ,source.revenueGroupId
-    ,source.revenueTypeId
-    ,source.revenueSubTypeId
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (InvoiceId
+    ,Type
+	,TypeDescription
+    ,ClientPimsId
+    ,PatientPimsId
+    ,TransactionDate
+    ,Sequence
+    ,Code
+    ,Description
+    ,Quantity
+    ,Amount
+    ,Discount
+    ,Tax
+    ,DispensingFee
+    ,IsPosted
+    ,IsPayment
+    ,IsVoided
+    ,ProviderId
+    ,EnteredById
+    ,Comments
+    ,LocationId
+    ,NormalizedCategory
+    ,RevenueClassId
+    ,RevenueGroupId
+    ,RevenueTypeId
+    ,RevenueSubTypeId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+VALUES (source.InvoiceId
+    ,source.Type
+	,source.TypeDescription
+    ,source.ClientPimsId
+    ,source.PatientPimsId
+    ,source.TransactionDate
+    ,source.Sequence
+    ,source.Code
+    ,source.Description
+    ,source.Quantity
+    ,source.Amount
+    ,source.Discount
+    ,source.Tax
+    ,source.DispensingFee
+    ,source.IsPosted
+    ,source.IsPayment
+    ,source.IsVoided
+    ,source.ProviderId
+    ,source.EnteredById
+    ,source.Comments
+    ,source.LocationId
+    ,source.NormalizedCategory
+    ,source.RevenueClassId
+    ,source.RevenueGroupId
+    ,source.RevenueTypeId
+    ,source.RevenueSubTypeId
+	,source.DpUid
+	,source.PimsId
+	,source.SiteId
+	,source.AgentVersion
+	,source.Action
+	,source.DpCreateDate
+	,source.DpModifiedDate
+	,source.SyncDate
+	,source.CorrelationId
+	,source.LastModifiedByCorrelationId
+	,source.Generation
+	,source.Deleted);

@@ -1,169 +1,169 @@
 ﻿MERGE dbo.Code AS target
-USING (SELECT @pimsType
-    ,@code
-    ,@description
-    ,@categoryCode
-    ,@categoryDescription
-    ,@basePrice
-    ,@inactive
-    ,@locationId
-    ,@invoiceDescription
-    ,@unitCost
-    ,@minPrice
-    ,@dispensingFee
-    ,@markup
-    ,@unitOfMeasure
-    ,@barCode
-    ,@normalizedCategory
-    ,@revenueClassId
-    ,@revenueGroupId
-    ,@revenueTypeId
-    ,@revenueSubTypeId
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (pimsType
-    ,code
-    ,description
-    ,categoryCode
-    ,categoryDescription
-    ,basePrice
-    ,inactive
-    ,locationId
-    ,invoiceDescription
-    ,unitCost
-    ,minPrice
-    ,dispensingFee
-    ,markup
-    ,unitOfMeasure
-    ,barCode
-    ,normalizedCategory
-    ,revenueClassId
-    ,revenueGroupId
-    ,revenueTypeId
-    ,revenueSubTypeId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @PimsType
+    ,@Code
+    ,@Description
+    ,@CategoryCode
+    ,@CategoryDescription
+    ,@BasePrice
+    ,@Inactive
+    ,@LocationId
+    ,@InvoiceDescription
+    ,@UnitCost
+    ,@MinPrice
+    ,@DispensingFee
+    ,@Markup
+    ,@UnitOfMeasure
+    ,@BarCode
+    ,@NormalizedCategory
+    ,@RevenueClassId
+    ,@RevenueGroupId
+    ,@RevenueTypeId
+    ,@RevenueSubTypeId
+	,@DpUid
+	,@PimsId
+	,@SiteId
+	,@AgentVersion
+	,@Action
+	,@DpCreatedDate
+	,@DpModifiedDate
+	,@SyncDate
+	,@CorrelationId
+	,@LastModifiedByCorrelationId
+	,@Generation
+	,@Deleted)
+AS source (PimsType
+    ,Code
+    ,Description
+    ,CategoryCode
+    ,CategoryDescription
+    ,BasePrice
+    ,Inactive
+    ,LocationId
+    ,InvoiceDescription
+    ,UnitCost
+    ,MinPrice
+    ,DispensingFee
+    ,Markup
+    ,UnitOfMeasure
+    ,BarCode
+    ,NormalizedCategory
+    ,RevenueClassId
+    ,RevenueGroupId
+    ,RevenueTypeId
+    ,RevenueSubTypeId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET pimsType = source.pimsType
-    ,code = source.code
-    ,description = source.description
-    ,categoryCode = source.categoryCode
-    ,categoryDescription = source.categoryDescription
-    ,basePrice = source.basePrice
-    ,inactive = source.inactive
-    ,locationId = source.locationId
-    ,invoiceDescription = source.invoiceDescription
-    ,unitCost = source.unitCost
-    ,minPrice = source.minPrice
-    ,dispensingFee = source.dispensingFee
-    ,markup = source.markup
-    ,unitOfMeasure = source.unitOfMeasure
-    ,barCode = source.barCode
-    ,normalizedCategory = source.normalizedCategory
-    ,revenueClassId = source.revenueClassId
-    ,revenueGroupId = source.revenueGroupId
-    ,revenueTypeId = source.revenueTypeId
-    ,revenueSubTypeId = source.revenueSubTypeId
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET PimsType = source.PimsType
+    ,Code = source.Code
+    ,Description = source.Description
+    ,CategoryCode = source.CategoryCode
+    ,CategoryDescription = source.CategoryDescription
+    ,BasePrice = source.BasePrice
+    ,Inactive = source.Inactive
+    ,LocationId = source.LocationId
+    ,InvoiceDescription = source.InvoiceDescription
+    ,UnitCost = source.UnitCost
+    ,MinPrice = source.MinPrice
+    ,DispensingFee = source.DispensingFee
+    ,Markup = source.Markup
+    ,UnitOfMeasure = source.UnitOfMeasure
+    ,BarCode = source.BarCode
+    ,NormalizedCategory = source.NormalizedCategory
+    ,RevenueClassId = source.RevenueClassId
+    ,RevenueGroupId = source.RevenueGroupId
+    ,RevenueTypeId = source.RevenueTypeId
+    ,RevenueSubTypeId = source.RevenueSubTypeId
+	--,DpUid = source.DpUid
+	,PimsId = source.PimsId
+	,SiteId = source.SiteId
+	,AgentVersion = source.AgentVersion
+	,Action = source.Action
+	,DpCreateDate = source.DpCreateDate
+	,DpModifiedDate = source.DpModifiedDate
+	,SyncDate = source.SyncDate
+	,CorrelationId = source.CorrelationId
+	,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+	,Generation = source.Generation
+	,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (pimsType
-    ,code
-    ,description
-    ,categoryCode
-    ,categoryDescription
-    ,basePrice
-    ,inactive
-    ,locationId
-    ,invoiceDescription
-    ,unitCost
-    ,minPrice
-    ,dispensingFee
-    ,markup
-    ,unitOfMeasure
-    ,barCode
-    ,normalizedCategory
-    ,revenueClassId
-    ,revenueGroupId
-    ,revenueTypeId
-    ,revenueSubTypeId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.pimsType
-    ,source.code
-    ,source.description
-    ,source.categoryCode
-    ,source.categoryDescription
-    ,source.basePrice
-    ,source.inactive
-    ,source.locationId
-    ,source.invoiceDescription
-    ,source.unitCost
-    ,source.minPrice
-    ,source.dispensingFee
-    ,source.markup
-    ,source.unitOfMeasure
-    ,source.barCode
-    ,source.normalizedCategory
-    ,source.revenueClassId
-    ,source.revenueGroupId
-    ,source.revenueTypeId
-    ,source.revenueSubTypeId
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (PimsType
+    ,Code
+    ,Description
+    ,CategoryCode
+    ,CategoryDescription
+    ,BasePrice
+    ,Inactive
+    ,LocationId
+    ,InvoiceDescription
+    ,UnitCost
+    ,MinPrice
+    ,DispensingFee
+    ,Markup
+    ,UnitOfMeasure
+    ,BarCode
+    ,NormalizedCategory
+    ,RevenueClassId
+    ,RevenueGroupId
+    ,RevenueTypeId
+    ,RevenueSubTypeId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+VALUES (source.PimsType
+    ,source.Code
+    ,source.Description
+    ,source.CategoryCode
+    ,source.CategoryDescription
+    ,source.BasePrice
+    ,source.Inactive
+    ,source.LocationId
+    ,source.InvoiceDescription
+    ,source.UnitCost
+    ,source.MinPrice
+    ,source.DispensingFee
+    ,source.Markup
+    ,source.UnitOfMeasure
+    ,source.BarCode
+    ,source.NormalizedCategory
+    ,source.RevenueClassId
+    ,source.RevenueGroupId
+    ,source.RevenueTypeId
+    ,source.RevenueSubTypeId
+	,source.DpUid
+	,source.PimsId
+	,source.SiteId
+	,source.AgentVersion
+	,source.Action
+	,source.DpCreateDate
+	,source.DpModifiedDate
+	,source.SyncDate
+	,source.CorrelationId
+	,source.LastModifiedByCorrelationId
+	,source.Generation
+	,source.Deleted);

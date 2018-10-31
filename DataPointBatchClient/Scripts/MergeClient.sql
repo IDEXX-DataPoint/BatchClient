@@ -1,214 +1,214 @@
 ﻿MERGE dbo.Client AS target
-USING (SELECT @title
-    ,@lastName
-    ,@firstName
-    ,@middleName
-    ,@alternateFirstName
-    ,@alternateLastName
-    ,@pimsCreatedDate
-    ,@inactive
-    ,@suspendReminders
-    ,@locationId
-    ,@address1
-    ,@address2
-    ,@city
-    ,@state
-    ,@postalCode
-    ,@alternateAddress1
-    ,@alternateAddress2
-    ,@alternateCity
-    ,@alternateState
-    ,@alternatePostalCode
-    ,@phoneName1
-    ,@phone1
-    ,@phoneName2
-    ,@phone2
-    ,@phoneName3
-    ,@phone3
-    ,@email
-    ,@pimsClientIdentifier
-    ,@referralSource
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (title
-    ,lastName
-    ,firstName
-    ,middleName
-    ,alternateFirstName
-    ,alternateLastName
-    ,pimsCreatedDate
-    ,inactive
-    ,suspendReminders
-    ,locationId
-    ,address1
-    ,address2
-    ,city
-    ,state
-    ,postalCode
-    ,alternateAddress1
-    ,alternateAddress2
-    ,alternateCity
-    ,alternateState
-    ,alternatePostalCode
-    ,phoneName1
-    ,phone1
-    ,phoneName2
-    ,phone2
-    ,phoneName3
-    ,phone3
-    ,email
-    ,pimsClientIdentifier
-    ,referralSource
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @Title
+    ,@LastName
+    ,@FirstName
+    ,@MiddleName
+    ,@AlternateFirstName
+    ,@AlternateLastName
+    ,@PimsCreatedDate
+    ,@Inactive
+    ,@SuspendReminders
+    ,@LocationId
+    ,@Address1
+    ,@Address2
+    ,@City
+    ,@State
+    ,@PostalCode
+    ,@AlternateAddress1
+    ,@AlternateAddress2
+    ,@AlternateCity
+    ,@AlternateState
+    ,@AlternatePostalCode
+    ,@PhoneName1
+    ,@Phone1
+    ,@PhoneName2
+    ,@Phone2
+    ,@PhoneName3
+    ,@Phone3
+    ,@Email
+    ,@PimsClientIdentifier
+    ,@ReferralSource
+    ,@DpUid
+    ,@PimsId
+    ,@SiteId
+    ,@AgentVersion
+    ,@Action
+    ,@DpCreatedDate
+    ,@DpModifiedDate
+    ,@SyncDate
+    ,@CorrelationId
+    ,@LastModifiedByCorrelationId
+    ,@Generation
+    ,@Deleted)
+AS source (Title
+    ,LastName
+    ,FirstName
+    ,MiddleName
+    ,AlternateFirstName
+    ,AlternateLastName
+    ,PimsCreatedDate
+    ,Inactive
+    ,SuspendReminders
+    ,LocationId
+    ,Address1
+    ,Address2
+    ,City
+    ,State
+    ,PostalCode
+    ,AlternateAddress1
+    ,AlternateAddress2
+    ,AlternateCity
+    ,AlternateState
+    ,AlternatePostalCode
+    ,PhoneName1
+    ,Phone1
+    ,PhoneName2
+    ,Phone2
+    ,PhoneName3
+    ,Phone3
+    ,Email
+    ,PimsClientIdentifier
+    ,ReferralSource
+    ,DpUid
+    ,PimsId
+    ,SiteId
+    ,AgentVersion
+    ,Action
+    ,DpCreateDate
+    ,DpModifiedDate
+    ,SyncDate
+    ,CorrelationId
+    ,LastModifiedByCorrelationId
+    ,Generation
+    ,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET title = source.title
-    ,lastName = source.lastName
-    ,firstName = source.firstName
-    ,middleName = source.middleName
-    ,alternateFirstName = source.alternateFirstName
-    ,alternateLastName = source.alternateLastName
-    ,pimsCreatedDate = source.pimsCreatedDate
-    ,inactive = source.inactive
-    ,suspendReminders = source.suspendReminders
-    ,locationId = source.locationId
-    ,address1 = source.address1
-    ,address2 = source.address2
-    ,city = source.city
-    ,state = source.state
-    ,postalCode = source.postalCode
-    ,alternateAddress1 = source.alternateAddress1
-    ,alternateAddress2 = source.alternateAddress2
-    ,alternateCity = source.alternateCity
-    ,alternateState = source.alternateState
-    ,alternatePostalCode = source.alternatePostalCode
-    ,phoneName1 = source.phoneName1
-    ,phone1 = source.phone1
-    ,phoneName2 = source.phoneName2
-    ,phone2 = source.phone2
-    ,phoneName3 = source.phoneName3
-    ,phone3 = source.phone3
-    ,email = source.email
-    ,pimsClientIdentifier = source.pimsClientIdentifier
-    ,referralSource = source.referralSource
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET Title = source.Title
+    ,LastName = source.LastName
+    ,FirstName = source.FirstName
+    ,MiddleName = source.MiddleName
+    ,AlternateFirstName = source.AlternateFirstName
+    ,AlternateLastName = source.AlternateLastName
+    ,PimsCreatedDate = source.PimsCreatedDate
+    ,Inactive = source.Inactive
+    ,SuspendReminders = source.SuspendReminders
+    ,LocationId = source.LocationId
+    ,Address1 = source.Address1
+    ,Address2 = source.Address2
+    ,City = source.City
+    ,State = source.State
+    ,PostalCode = source.PostalCode
+    ,AlternateAddress1 = source.AlternateAddress1
+    ,AlternateAddress2 = source.AlternateAddress2
+    ,AlternateCity = source.AlternateCity
+    ,AlternateState = source.AlternateState
+    ,AlternatePostalCode = source.AlternatePostalCode
+    ,PhoneName1 = source.PhoneName1
+    ,Phone1 = source.Phone1
+    ,PhoneName2 = source.PhoneName2
+    ,Phone2 = source.Phone2
+    ,PhoneName3 = source.PhoneName3
+    ,Phone3 = source.Phone3
+    ,Email = source.Email
+    ,PimsClientIdentifier = source.PimsClientIdentifier
+    ,ReferralSource = source.ReferralSource
+    --,DpUid = source.DpUid
+    ,PimsId = source.PimsId
+    ,SiteId = source.SiteId
+    ,AgentVersion = source.AgentVersion
+    ,Action = source.Action
+    ,DpCreateDate = source.DpCreateDate
+    ,DpModifiedDate = source.DpModifiedDate
+    ,SyncDate = source.SyncDate
+    ,CorrelationId = source.CorrelationId
+    ,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+    ,Generation = source.Generation
+    ,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (title
-    ,lastName
-    ,firstName
-    ,middleName
-    ,alternateFirstName
-    ,alternateLastName
-    ,pimsCreatedDate
-    ,inactive
-    ,suspendReminders
-    ,locationId
-    ,address1
-    ,address2
-    ,city
-    ,state
-    ,postalCode
-    ,alternateAddress1
-    ,alternateAddress2
-    ,alternateCity
-    ,alternateState
-    ,alternatePostalCode
-    ,phoneName1
-    ,phone1
-    ,phoneName2
-    ,phone2
-    ,phoneName3
-    ,phone3
-    ,email
-    ,pimsClientIdentifier
-    ,referralSource
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.title
-    ,source.lastName
-    ,source.firstName
-    ,source.middleName
-    ,source.alternateFirstName
-    ,source.alternateLastName
-    ,source.pimsCreatedDate
-    ,source.inactive
-    ,source.suspendReminders
-    ,source.locationId
-    ,source.address1
-    ,source.address2
-    ,source.city
-    ,source.state
-    ,source.postalCode
-    ,source.alternateAddress1
-    ,source.alternateAddress2
-    ,source.alternateCity
-    ,source.alternateState
-    ,source.alternatePostalCode
-    ,source.phoneName1
-    ,source.phone1
-    ,source.phoneName2
-    ,source.phone2
-    ,source.phoneName3
-    ,source.phone3
-    ,source.email
-    ,source.pimsClientIdentifier
-    ,source.referralSource
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (Title
+    ,LastName
+    ,FirstName
+    ,MiddleName
+    ,AlternateFirstName
+    ,AlternateLastName
+    ,PimsCreatedDate
+    ,Inactive
+    ,SuspendReminders
+    ,LocationId
+    ,Address1
+    ,Address2
+    ,City
+    ,State
+    ,PostalCode
+    ,AlternateAddress1
+    ,AlternateAddress2
+    ,AlternateCity
+    ,AlternateState
+    ,AlternatePostalCode
+    ,PhoneName1
+    ,Phone1
+    ,PhoneName2
+    ,Phone2
+    ,PhoneName3
+    ,Phone3
+    ,Email
+    ,PimsClientIdentifier
+    ,ReferralSource
+    ,DpUid
+    ,PimsId
+    ,SiteId
+    ,AgentVersion
+    ,Action
+    ,DpCreateDate
+    ,DpModifiedDate
+    ,SyncDate
+    ,CorrelationId
+    ,LastModifiedByCorrelationId
+    ,Generation
+    ,Deleted)
+VALUES (source.Title
+    ,source.LastName
+    ,source.FirstName
+    ,source.MiddleName
+    ,source.AlternateFirstName
+    ,source.AlternateLastName
+    ,source.PimsCreatedDate
+    ,source.Inactive
+    ,source.SuspendReminders
+    ,source.LocationId
+    ,source.Address1
+    ,source.Address2
+    ,source.City
+    ,source.State
+    ,source.PostalCode
+    ,source.AlternateAddress1
+    ,source.AlternateAddress2
+    ,source.AlternateCity
+    ,source.AlternateState
+    ,source.AlternatePostalCode
+    ,source.PhoneName1
+    ,source.Phone1
+    ,source.PhoneName2
+    ,source.Phone2
+    ,source.PhoneName3
+    ,source.Phone3
+    ,source.Email
+    ,source.PimsClientIdentifier
+    ,source.ReferralSource
+    ,source.DpUid
+    ,source.PimsId
+    ,source.SiteId
+    ,source.AgentVersion
+    ,source.Action
+    ,source.DpCreateDate
+    ,source.DpModifiedDate
+    ,source.SyncDate
+    ,source.CorrelationId
+    ,source.LastModifiedByCorrelationId
+    ,source.Generation
+    ,source.Deleted);

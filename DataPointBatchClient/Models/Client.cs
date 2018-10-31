@@ -11,8 +11,8 @@ namespace DataPointBatchClient.Models
         public string AlternateFirstName { get; set; }
         public string AlternateLastName { get; set; }
         public DateTime? PimsCreatedDate { get; set; }
-        public bool? Inactive { get; set; }
-        public bool? SuspendReminders { get; set; }
+        public bool Inactive { get; set; }
+        public bool SuspendReminders { get; set; }
         public string LocationId { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

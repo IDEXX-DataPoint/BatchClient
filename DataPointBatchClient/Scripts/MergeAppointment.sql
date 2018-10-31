@@ -1,159 +1,179 @@
 ﻿MERGE dbo.Appointment AS target
-USING (SELECT @source
-    ,@type
-    ,@clientPimsId
-    ,@clientPimsIdentifier
-    ,@patientPimsId
-    ,@patientPimsIdentifier
-    ,@date
-    ,@duration
-    ,@units
-    ,@unitLength
-    ,@status
-    ,@room
-    ,@reason
-    ,@notes
-    ,@resourceId
-    ,@resourceName
-    ,@locationId
-    ,@scheduleType
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS sourceTable (source
-    ,type
-    ,clientPimsId
-    ,clientPimsIdentifier
-    ,patientPimsId
-    ,patientPimsIdentifier
-    ,date
-    ,duration
-    ,units
-    ,unitLength
-    ,status
-    ,room
-    ,reason
-    ,notes
-    ,resourceId
-    ,resourceName
-    ,locationId
-    ,scheduleType
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = sourceTable.dpUid)
+USING (SELECT @Source
+    ,@Type
+    ,@ClientPimsId
+    ,@ClientPimsIdentifier
+    ,@PatientPimsId
+    ,@PatientPimsIdentifier
+    ,@Date
+    ,@Duration
+    ,@Units
+    ,@UnitLength
+    ,@Status
+    ,@Room
+    ,@Reason
+    ,@Notes
+    ,@ResourceId
+    ,@ResourceName
+    ,@LocationId
+    ,@ScheduleType
+    ,@StatusNormalizedId
+    ,@StatusNormalizedDescription
+    ,@StatusPimsId
+    ,@StatusPimsDescription
+    ,@DpUid
+    ,@PimsId
+    ,@SiteId
+    ,@AgentVersion
+    ,@Action
+    ,@DpCreatedDate
+    ,@DpModifiedDate
+    ,@SyncDate
+    ,@CorrelationId
+    ,@LastModifiedByCorrelationId
+    ,@Generation
+    ,@Deleted)
+AS sourceTable (Source
+    ,Type
+    ,ClientPimsId
+    ,ClientPimsIdentifier
+    ,PatientPimsId
+    ,PatientPimsIdentifier
+    ,Date
+    ,Duration
+    ,Units
+    ,UnitLength
+    ,Status
+    ,Room
+    ,Reason
+    ,Notes
+    ,ResourceId
+    ,ResourceName
+    ,LocationId
+    ,ScheduleType
+    ,StatusNormalizedId
+    ,StatusNormalizedDescription
+    ,StatusPimsId
+    ,StatusPimsDescription
+    ,DpUid
+    ,PimsId
+    ,SiteId
+    ,AgentVersion
+    ,Action
+    ,DpCreateDate
+    ,DpModifiedDate
+    ,SyncDate
+    ,CorrelationId
+    ,LastModifiedByCorrelationId
+    ,Generation
+    ,Deleted)
+ON (target.DpUid = sourceTable.DpUid)
 
-WHEN MATCHED AND sourceTable.deleted = 1
+WHEN MATCHED AND sourceTable.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET source = sourceTable.source
-    ,type = sourceTable.type
-    ,clientPimsId = sourceTable.clientPimsId
-    ,clientPimsIdentifier = sourceTable.clientPimsIdentifier
-    ,patientPimsId = sourceTable.patientPimsId
-    ,patientPimsIdentifier = sourceTable.patientPimsIdentifier
-    ,date = sourceTable.date
-    ,duration = sourceTable.duration
-    ,units = sourceTable.units
-    ,unitLength = sourceTable.unitLength
-    ,status = sourceTable.status
-    ,room = sourceTable.room
-    ,reason = sourceTable.reason
-    ,notes = sourceTable.notes
-    ,resourceId = sourceTable.resourceId
-    ,resourceName = sourceTable.resourceName
-    ,locationId = sourceTable.locationId
-    ,scheduleType = sourceTable.scheduleType
-	--,dpUid = sourceTable.dpUid
-	,pimsId = sourceTable.pimsId
-	,siteId = sourceTable.siteId
-	,agentVersion = sourceTable.agentVersion
-	,action = sourceTable.action
-	,dpCreateDate = sourceTable.dpCreateDate
-	,dpModifiedDate = sourceTable.dpModifiedDate
-	,syncDate = sourceTable.syncDate
-	,correlationId = sourceTable.correlationId
-	,lastModifiedByCorrelationId = sourceTable.lastModifiedByCorrelationId
-	,generation = sourceTable.generation
-	,deleted = sourceTable.deleted
+THEN UPDATE SET Source = sourceTable.Source
+    ,Type = sourceTable.Type
+    ,ClientPimsId = sourceTable.ClientPimsId
+    ,ClientPimsIdentifier = sourceTable.ClientPimsIdentifier
+    ,PatientPimsId = sourceTable.PatientPimsId
+    ,PatientPimsIdentifier = sourceTable.PatientPimsIdentifier
+    ,Date = sourceTable.Date
+    ,Duration = sourceTable.Duration
+    ,Units = sourceTable.Units
+    ,UnitLength = sourceTable.UnitLength
+    ,Status = sourceTable.Status
+    ,Room = sourceTable.Room
+    ,Reason = sourceTable.Reason
+    ,Notes = sourceTable.Notes
+    ,ResourceId = sourceTable.ResourceId
+    ,ResourceName = sourceTable.ResourceName
+    ,LocationId = sourceTable.LocationId
+    ,ScheduleType = sourceTable.ScheduleType
+    ,StatusNormalizedId = sourceTable.StatusNormalizedId
+    ,StatusNormalizedDescription = sourceTable.StatusNormalizedDescription
+    ,StatusPimsId = sourceTable.StatusPimsId
+    ,StatusPimsDescription = sourceTable.StatusPimsDescription
+    --,DpUid = sourceTable.DpUid
+    ,PimsId = sourceTable.PimsId
+    ,SiteId = sourceTable.SiteId
+    ,AgentVersion = sourceTable.AgentVersion
+    ,Action = sourceTable.Action
+    ,DpCreateDate = sourceTable.DpCreateDate
+    ,DpModifiedDate = sourceTable.DpModifiedDate
+    ,SyncDate = sourceTable.SyncDate
+    ,CorrelationId = sourceTable.CorrelationId
+    ,LastModifiedByCorrelationId = sourceTable.LastModifiedByCorrelationId
+    ,Generation = sourceTable.Generation
+    ,Deleted = sourceTable.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (source
-    ,type
-    ,clientPimsId
-    ,clientPimsIdentifier
-    ,patientPimsId
-    ,patientPimsIdentifier
-    ,date
-    ,duration
-    ,units
-    ,unitLength
-    ,status
-    ,room
-    ,reason
-    ,notes
-    ,resourceId
-    ,resourceName
-    ,locationId
-    ,scheduleType
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (sourceTable.source
-    ,sourceTable.type
-    ,sourceTable.clientPimsId
-    ,sourceTable.clientPimsIdentifier
-    ,sourceTable.patientPimsId
-    ,sourceTable.patientPimsIdentifier
-    ,sourceTable.date
-    ,sourceTable.duration
-    ,sourceTable.units
-    ,sourceTable.unitLength
-    ,sourceTable.status
-    ,sourceTable.room
-    ,sourceTable.reason
-    ,sourceTable.notes
-    ,sourceTable.resourceId
-    ,sourceTable.resourceName
-    ,sourceTable.locationId
-    ,sourceTable.scheduleType
-	,sourceTable.dpUid
-	,sourceTable.pimsId
-	,sourceTable.siteId
-	,sourceTable.agentVersion
-	,sourceTable.action
-	,sourceTable.dpCreateDate
-	,sourceTable.dpModifiedDate
-	,sourceTable.syncDate
-	,sourceTable.correlationId
-	,sourceTable.lastModifiedByCorrelationId
-	,sourceTable.generation
-	,sourceTable.deleted);
+THEN INSERT (Source
+    ,Type
+    ,ClientPimsId
+    ,ClientPimsIdentifier
+    ,PatientPimsId
+    ,PatientPimsIdentifier
+    ,Date
+    ,Duration
+    ,Units
+    ,UnitLength
+    ,Status
+    ,Room
+    ,Reason
+    ,Notes
+    ,ResourceId
+    ,ResourceName
+    ,LocationId
+    ,ScheduleType
+    ,StatusNormalizedId
+    ,StatusNormalizedDescription
+    ,StatusPimsId
+    ,StatusPimsDescription
+    ,DpUid
+    ,PimsId
+    ,SiteId
+    ,AgentVersion
+    ,Action
+    ,DpCreateDate
+    ,DpModifiedDate
+    ,SyncDate
+    ,CorrelationId
+    ,LastModifiedByCorrelationId
+    ,Generation
+    ,Deleted)
+VALUES (sourceTable.Source
+    ,sourceTable.Type
+    ,sourceTable.ClientPimsId
+    ,sourceTable.ClientPimsIdentifier
+    ,sourceTable.PatientPimsId
+    ,sourceTable.PatientPimsIdentifier
+    ,sourceTable.Date
+    ,sourceTable.Duration
+    ,sourceTable.Units
+    ,sourceTable.UnitLength
+    ,sourceTable.Status
+    ,sourceTable.Room
+    ,sourceTable.Reason
+    ,sourceTable.Notes
+    ,sourceTable.ResourceId
+    ,sourceTable.ResourceName
+    ,sourceTable.LocationId
+    ,sourceTable.ScheduleType
+    ,sourceTable.StatusNormalizedId
+    ,sourceTable.StatusNormalizedDescription
+    ,sourceTable.StatusPimsId
+    ,sourceTable.StatusPimsDescription
+    ,sourceTable.DpUid
+    ,sourceTable.PimsId
+    ,sourceTable.SiteId
+    ,sourceTable.AgentVersion
+    ,sourceTable.Action
+    ,sourceTable.DpCreateDate
+    ,sourceTable.DpModifiedDate
+    ,sourceTable.SyncDate
+    ,sourceTable.CorrelationId
+    ,sourceTable.LastModifiedByCorrelationId
+    ,sourceTable.Generation
+    ,sourceTable.Deleted);

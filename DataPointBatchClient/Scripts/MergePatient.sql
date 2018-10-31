@@ -1,169 +1,174 @@
 ﻿MERGE dbo.Patient AS target
-USING (SELECT @pimsPatientIdentifier
-	,@name
-	,@gender
-	,@speciesDescription
-	,@breedId
-	,@breedDescription
-	,@colorId
-	,@microchipId
-	,@colorDescription
-	,@dateOfDeath
-	,@dateOfBirth
-	,@spayedOrNeutered
-	,@inactive
-	,@weight
-	,@weightUnit
-	,@weightUnitDescription
-	,@rabiesTag
-	,@clientPimsId
-	,@pimsClientIdentifier
-	,@locationId
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (pimsPatientIdentifier
-	,name
-	,gender
-	,speciesDescription
-	,breedId
-	,breedDescription
-	,colorId
-	,microchipId
-	,colorDescription
-	,dateOfDeath
-	,dateOfBirth
-	,spayedOrNeutered
-	,inactive
-	,weight
-	,weightUnit
-	,weightUnitDescription
-	,rabiesTag
-	,clientPimsId
-	,pimsClientIdentifier
-	,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @PimsPatientIdentifier
+	,@Name
+	,@Gender
+	,@SpeciesDescription
+	,@BreedId
+	,@BreedDescription
+	,@ColorId
+	,@MicrochipId
+	,@ColorDescription
+	,@PimsCreatedDate
+	,@DateOfDeath
+	,@DateOfBirth
+	,@SpayedOrNeutered
+	,@Inactive
+	,@Weight
+	,@WeightUnit
+	,@WeightUnitDescription
+	,@RabiesTag
+	,@ClientPimsId
+	,@PimsClientIdentifier
+	,@LocationId
+	,@DpUid
+	,@PimsId
+	,@SiteId
+	,@AgentVersion
+	,@Action
+	,@DpCreatedDate
+	,@DpModifiedDate
+	,@SyncDate
+	,@CorrelationId
+	,@LastModifiedByCorrelationId
+	,@Generation
+	,@Deleted)
+AS source (PimsPatientIdentifier
+	,Name
+	,Gender
+	,SpeciesDescription
+	,BreedId
+	,BreedDescription
+	,ColorId
+	,MicrochipId
+	,ColorDescription
+	,PimsCreatedDate
+	,DateOfDeath
+	,DateOfBirth
+	,SpayedOrNeutered
+	,Inactive
+	,Weight
+	,WeightUnit
+	,WeightUnitDescription
+	,RabiesTag
+	,ClientPimsId
+	,PimsClientIdentifier
+	,LocationId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET pimsPatientIdentifier = source.pimsPatientIdentifier
-	,name = source.name
-	,gender = source.gender
-	,speciesDescription = source.speciesDescription
-	,breedId = source.breedId
-	,breedDescription = source.breedDescription
-	,colorId = source.colorId
-	,microchipId = source.microchipId
-	,colorDescription = source.colorDescription
-	,dateOfDeath = source.dateOfDeath
-	,dateOfBirth = source.dateOfBirth
-	,spayedOrNeutered = source.spayedOrNeutered
-	,inactive = source.inactive
-	,weight = source.weight
-	,weightUnit = source.weightUnit
-	,weightUnitDescription = source.weightUnitDescription
-	,rabiesTag = source.rabiesTag
-	,clientPimsId = source.clientPimsId
-	,pimsClientIdentifier = source.pimsClientIdentifier
-	,locationId = source.locationId
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET PimsPatientIdentifier = source.PimsPatientIdentifier
+	,Name = source.Name
+	,Gender = source.Gender
+	,SpeciesDescription = source.SpeciesDescription
+	,BreedId = source.BreedId
+	,BreedDescription = source.BreedDescription
+	,ColorId = source.ColorId
+	,MicrochipId = source.MicrochipId
+	,ColorDescription = source.ColorDescription
+	,PimsCreatedDate = source.PimsCreatedDate
+	,DateOfDeath = source.DateOfDeath
+	,DateOfBirth = source.DateOfBirth
+	,SpayedOrNeutered = source.SpayedOrNeutered
+	,Inactive = source.Inactive
+	,Weight = source.Weight
+	,WeightUnit = source.WeightUnit
+	,WeightUnitDescription = source.WeightUnitDescription
+	,RabiesTag = source.RabiesTag
+	,ClientPimsId = source.ClientPimsId
+	,PimsClientIdentifier = source.PimsClientIdentifier
+	,LocationId = source.LocationId
+	--,DpUid = source.DpUid
+	,PimsId = source.PimsId
+	,SiteId = source.SiteId
+	,AgentVersion = source.AgentVersion
+	,Action = source.Action
+	,DpCreateDate = source.DpCreateDate
+	,DpModifiedDate = source.DpModifiedDate
+	,SyncDate = source.SyncDate
+	,CorrelationId = source.CorrelationId
+	,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+	,Generation = source.Generation
+	,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (pimsPatientIdentifier
-	,name
-	,gender
-	,speciesDescription
-	,breedId
-	,breedDescription
-	,colorId
-	,microchipId
-	,colorDescription
-	,dateOfDeath
-	,dateOfBirth
-	,spayedOrNeutered
-	,inactive
-	,weight
-	,weightUnit
-	,weightUnitDescription
-	,rabiesTag
-	,clientPimsId
-	,pimsClientIdentifier
-	,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.pimsPatientIdentifier
-	,source.name
-	,source.gender
-	,source.speciesDescription
-	,source.breedId
-	,source.breedDescription
-	,source.colorId
-	,source.microchipId
-	,source.colorDescription
-	,source.dateOfDeath
-	,source.dateOfBirth
-	,source.spayedOrNeutered
-	,source.inactive
-	,source.weight
-	,source.weightUnit
-	,source.weightUnitDescription
-	,source.rabiesTag
-	,source.clientPimsId
-	,source.pimsClientIdentifier
-	,source.locationId
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (PimsPatientIdentifier
+	,Name
+	,Gender
+	,SpeciesDescription
+	,BreedId
+	,BreedDescription
+	,ColorId
+	,MicrochipId
+	,ColorDescription
+	,PimsCreatedDate
+	,DateOfDeath
+	,DateOfBirth
+	,SpayedOrNeutered
+	,Inactive
+	,Weight
+	,WeightUnit
+	,WeightUnitDescription
+	,RabiesTag
+	,ClientPimsId
+	,PimsClientIdentifier
+	,LocationId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+VALUES (source.PimsPatientIdentifier
+	,source.Name
+	,source.Gender
+	,source.SpeciesDescription
+	,source.BreedId
+	,source.BreedDescription
+	,source.ColorId
+	,source.MicrochipId
+	,source.ColorDescription
+	,source.PimsCreatedDate
+	,source.DateOfDeath
+	,source.DateOfBirth
+	,source.SpayedOrNeutered
+	,source.Inactive
+	,source.Weight
+	,source.WeightUnit
+	,source.WeightUnitDescription
+	,source.RabiesTag
+	,source.ClientPimsId
+	,source.PimsClientIdentifier
+	,source.LocationId
+	,source.DpUid
+	,source.PimsId
+	,source.SiteId
+	,source.AgentVersion
+	,source.Action
+	,source.DpCreateDate
+	,source.DpModifiedDate
+	,source.SyncDate
+	,source.CorrelationId
+	,source.LastModifiedByCorrelationId
+	,source.Generation
+	,source.Deleted);

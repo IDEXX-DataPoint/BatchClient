@@ -1,124 +1,124 @@
 ﻿MERGE dbo.Prescription AS target
-USING (SELECT @code
-    ,@description
-    ,@providerId
-    ,@providerName
-    ,@administeredDate
-    ,@quantity
-    ,@amount
-    ,@instructions
-    ,@clientPimsId
-    ,@patientPimsId
-    ,@locationId
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (code
-    ,description
-    ,providerId
-    ,providerName
-    ,administeredDate
-    ,quantity
-    ,amount
-    ,instructions
-    ,clientPimsId
-    ,patientPimsId
-    ,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @Code
+    ,@Description
+    ,@ProviderId
+    ,@ProviderName
+    ,@AdministeredDate
+    ,@Quantity
+    ,@Amount
+    ,@Instructions
+    ,@ClientPimsId
+    ,@PatientPimsId
+    ,@LocationId
+	,@DpUid
+	,@PimsId
+	,@SiteId
+	,@AgentVersion
+	,@Action
+	,@DpCreatedDate
+	,@DpModifiedDate
+	,@SyncDate
+	,@CorrelationId
+	,@LastModifiedByCorrelationId
+	,@Generation
+	,@Deleted)
+AS source (Code
+    ,Description
+    ,ProviderId
+    ,ProviderName
+    ,AdministeredDate
+    ,Quantity
+    ,Amount
+    ,Instructions
+    ,ClientPimsId
+    ,PatientPimsId
+    ,LocationId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET code = source.code
-    ,description = source.description
-    ,providerId = source.providerId
-    ,providerName = source.providerName
-    ,administeredDate = source.administeredDate
-    ,quantity = source.quantity
-    ,amount = source.amount
-    ,instructions = source.instructions
-    ,clientPimsId = source.clientPimsId
-    ,patientPimsId = source.patientPimsId
-    ,locationId = source.locationId
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET Code = source.Code
+    ,Description = source.Description
+    ,ProviderId = source.ProviderId
+    ,ProviderName = source.ProviderName
+    ,AdministeredDate = source.AdministeredDate
+    ,Quantity = source.Quantity
+    ,Amount = source.Amount
+    ,Instructions = source.Instructions
+    ,ClientPimsId = source.ClientPimsId
+    ,PatientPimsId = source.PatientPimsId
+    ,LocationId = source.LocationId
+	--,DpUid = source.DpUid
+	,PimsId = source.PimsId
+	,SiteId = source.SiteId
+	,AgentVersion = source.AgentVersion
+	,Action = source.Action
+	,DpCreateDate = source.DpCreateDate
+	,DpModifiedDate = source.DpModifiedDate
+	,SyncDate = source.SyncDate
+	,CorrelationId = source.CorrelationId
+	,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+	,Generation = source.Generation
+	,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (code
-    ,description
-    ,providerId
-    ,providerName
-    ,administeredDate
-    ,quantity
-    ,amount
-    ,instructions
-    ,clientPimsId
-    ,patientPimsId
-    ,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.code
-    ,source.description
-    ,source.providerId
-    ,source.providerName
-    ,source.administeredDate
-    ,source.quantity
-    ,source.amount
-    ,source.instructions
-    ,source.clientPimsId
-    ,source.patientPimsId
-    ,source.locationId
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (Code
+    ,Description
+    ,ProviderId
+    ,ProviderName
+    ,AdministeredDate
+    ,Quantity
+    ,Amount
+    ,Instructions
+    ,ClientPimsId
+    ,PatientPimsId
+    ,LocationId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+VALUES (source.Code
+    ,source.Description
+    ,source.ProviderId
+    ,source.ProviderName
+    ,source.AdministeredDate
+    ,source.Quantity
+    ,source.Amount
+    ,source.Instructions
+    ,source.ClientPimsId
+    ,source.PatientPimsId
+    ,source.LocationId
+	,source.DpUid
+	,source.PimsId
+	,source.SiteId
+	,source.AgentVersion
+	,source.Action
+	,source.DpCreateDate
+	,source.DpModifiedDate
+	,source.SyncDate
+	,source.CorrelationId
+	,source.LastModifiedByCorrelationId
+	,source.Generation
+	,source.Deleted);

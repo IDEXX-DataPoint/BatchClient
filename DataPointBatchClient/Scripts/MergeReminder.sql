@@ -1,104 +1,104 @@
 ﻿MERGE dbo.Reminder AS target
-USING (SELECT @clientPimsId
-    ,@patientPimsId
-    ,@code
-    ,@description
-    ,@dueDate
-    ,@lastRemindedDate
-    ,@locationId
-	,@dpUid
-	,@pimsId
-	,@siteId
-	,@agentVersion
-	,@action
-	,@dpCreateDate
-	,@dpModifiedDate
-	,@syncDate
-	,@correlationId
-	,@lastModifiedByCorrelationId
-	,@generation
-	,@deleted)
-AS source (clientPimsId
-    ,patientPimsId
-    ,code
-    ,description
-    ,dueDate
-    ,lastRemindedDate
-    ,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-ON (target.dpUid = source.dpUid)
+USING (SELECT @ClientPimsId
+    ,@PatientPimsId
+    ,@Code
+    ,@Description
+    ,@DueDate
+    ,@LastRemindedDate
+    ,@LocationId
+	,@DpUid
+	,@PimsId
+	,@SiteId
+	,@AgentVersion
+	,@Action
+	,@DpCreatedDate
+	,@DpModifiedDate
+	,@SyncDate
+	,@CorrelationId
+	,@LastModifiedByCorrelationId
+	,@Generation
+	,@Deleted)
+AS source (ClientPimsId
+    ,PatientPimsId
+    ,Code
+    ,Description
+    ,DueDate
+    ,LastRemindedDate
+    ,LocationId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+ON (target.DpUid = source.DpUid)
 
-WHEN MATCHED AND source.deleted = 1
+WHEN MATCHED AND source.Deleted = 1
 THEN DELETE
 
 WHEN MATCHED
-THEN UPDATE SET clientPimsId = source.clientPimsId
-    ,patientPimsId = source.patientPimsId
-    ,code = source.code
-    ,description = source.description
-    ,dueDate = source.dueDate
-    ,lastRemindedDate = source.lastRemindedDate
-    ,locationId = source.locationId
-	--,dpUid = source.dpUid
-	,pimsId = source.pimsId
-	,siteId = source.siteId
-	,agentVersion = source.agentVersion
-	,action = source.action
-	,dpCreateDate = source.dpCreateDate
-	,dpModifiedDate = source.dpModifiedDate
-	,syncDate = source.syncDate
-	,correlationId = source.correlationId
-	,lastModifiedByCorrelationId = source.lastModifiedByCorrelationId
-	,generation = source.generation
-	,deleted = source.deleted
+THEN UPDATE SET ClientPimsId = source.ClientPimsId
+    ,PatientPimsId = source.PatientPimsId
+    ,Code = source.Code
+    ,Description = source.Description
+    ,DueDate = source.DueDate
+    ,LastRemindedDate = source.LastRemindedDate
+    ,LocationId = source.LocationId
+	--,DpUid = source.DpUid
+	,PimsId = source.PimsId
+	,SiteId = source.SiteId
+	,AgentVersion = source.AgentVersion
+	,Action = source.Action
+	,DpCreateDate = source.DpCreateDate
+	,DpModifiedDate = source.DpModifiedDate
+	,SyncDate = source.SyncDate
+	,CorrelationId = source.CorrelationId
+	,LastModifiedByCorrelationId = source.LastModifiedByCorrelationId
+	,Generation = source.Generation
+	,Deleted = source.Deleted
 
 WHEN NOT MATCHED
-THEN INSERT (clientPimsId
-    ,patientPimsId
-    ,code
-    ,description
-    ,dueDate
-    ,lastRemindedDate
-    ,locationId
-	,dpUid
-	,pimsId
-	,siteId
-	,agentVersion
-	,action
-	,dpCreateDate
-	,dpModifiedDate
-	,syncDate
-	,correlationId
-	,lastModifiedByCorrelationId
-	,generation
-	,deleted)
-VALUES (source.clientPimsId
-    ,source.patientPimsId
-    ,source.code
-    ,source.description
-    ,source.dueDate
-    ,source.lastRemindedDate
-    ,source.locationId
-	,source.dpUid
-	,source.pimsId
-	,source.siteId
-	,source.agentVersion
-	,source.action
-	,source.dpCreateDate
-	,source.dpModifiedDate
-	,source.syncDate
-	,source.correlationId
-	,source.lastModifiedByCorrelationId
-	,source.generation
-	,source.deleted);
+THEN INSERT (ClientPimsId
+    ,PatientPimsId
+    ,Code
+    ,Description
+    ,DueDate
+    ,LastRemindedDate
+    ,LocationId
+	,DpUid
+	,PimsId
+	,SiteId
+	,AgentVersion
+	,Action
+	,DpCreateDate
+	,DpModifiedDate
+	,SyncDate
+	,CorrelationId
+	,LastModifiedByCorrelationId
+	,Generation
+	,Deleted)
+VALUES (source.ClientPimsId
+    ,source.PatientPimsId
+    ,source.Code
+    ,source.Description
+    ,source.DueDate
+    ,source.LastRemindedDate
+    ,source.LocationId
+	,source.DpUid
+	,source.PimsId
+	,source.SiteId
+	,source.AgentVersion
+	,source.Action
+	,source.DpCreateDate
+	,source.DpModifiedDate
+	,source.SyncDate
+	,source.CorrelationId
+	,source.LastModifiedByCorrelationId
+	,source.Generation
+	,source.Deleted);

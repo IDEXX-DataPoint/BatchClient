@@ -67,7 +67,7 @@ AS sourceTable (Source
     ,LastModifiedByCorrelationId
     ,Generation
     ,Deleted)
-ON (target.DpUid = sourceTable.DpUid)
+ON (target.PimsId = sourceTable.PimsId AND target.SiteId = sourceTable.SiteId)
 
 WHEN MATCHED AND sourceTable.Deleted = 1
 THEN DELETE

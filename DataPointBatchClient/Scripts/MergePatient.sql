@@ -65,7 +65,7 @@ AS source (PimsPatientIdentifier
 	,LastModifiedByCorrelationId
 	,Generation
 	,Deleted)
-ON (target.DpUid = source.DpUid)
+ON (target.PimsId = source.PimsId AND target.SiteId = source.SiteId)
 
 WHEN MATCHED AND source.Deleted = 1
 THEN DELETE

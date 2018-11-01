@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
@@ -68,7 +70,7 @@ namespace DataPointBatchClient
             }
         }
 
-        private static async Task StartJob()
+        private async Task StartJob()
         {
             // todo config validation
             var hours = new TimeSpan(2, 0, 0); // 2 hours
@@ -80,11 +82,30 @@ namespace DataPointBatchClient
             }
         }
 
-        private static async Task SyncSites()
+        private ConcurrentQueue<string> _siteQueue;
+        private const int NumberOfProcesses = 5;
+        private async Task SyncSites()
         {
-            var siteIdList = await new BatchApiUtility().GetSiteIdList();
-            foreach (var siteId in siteIdList)
+            _siteQueue = new BatchApiUtility().GetSiteIdQueue();
+
+            var tasks = new List<Task>();
+
+            for (var i = 0; i < NumberOfProcesses; i++)
             {
+                tasks.Add(SyncNextSite());
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        private async Task SyncNextSite()
+        {
+            while (_siteQueue.Any())
+            {
+                if (TokenSource.IsCancellationRequested) return;
+
+                if (!_siteQueue.TryDequeue(out var siteId)) return;
+                Logger.Debug($"Site: {siteId} dequeued");
                 await SyncSite(siteId);
             }
         }
@@ -106,11 +127,9 @@ namespace DataPointBatchClient
                     service.SyncResources(),
                     service.SyncTransactions(),
                 };
-
                 await Task.WhenAll(tasks);
 
-                Logger.Info($"Site: {siteId} all tasks complete" +
-                            (tasks.Any(x => !x.Result) ? " with error(s)" : string.Empty));
+                Logger.Info($"Site: {siteId} all tasks complete" + (tasks.Any(x => !x.Result) ? " with error(s)" : ""));
             }
             catch (OperationCanceledException)
             {

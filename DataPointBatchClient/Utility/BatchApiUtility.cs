@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -29,9 +30,26 @@ namespace DataPointBatchClient.Utility
             _authToken = new Lazy<Task<string>>(Authorize);
         }
 
-        public Task<List<string>> GetSiteIdList()
+        public ConcurrentQueue<string> GetSiteIdQueue()
         {
-            return _siteIdList.Value;
+            var list = Shuffle(_siteIdList.Value.Result);
+            return new ConcurrentQueue<string>(list);
+        }
+
+        private static readonly Random Rng = new Random();
+        public static IList<T> Shuffle<T>(IList<T> list)
+        {
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = Rng.Next(n + 1);
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+
+            return list;
         }
 
         private async Task<List<string>> InitializeSiteIdList()

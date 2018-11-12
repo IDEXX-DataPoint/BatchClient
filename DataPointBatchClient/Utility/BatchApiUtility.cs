@@ -20,20 +20,20 @@ namespace DataPointBatchClient.Utility
         private const string Endpoint = "https://io.datapointapi.com";
 
         public RestClient Client { get; }
-        private readonly Lazy<Task<List<string>>> _siteIdList;
+        private readonly Lazy<Task<List<Site>>> _siteList;
         private readonly Lazy<Task<string>> _authToken;
 
         public BatchApiUtility()
         {
             Client = new RestClient(Endpoint);
-            _siteIdList = new Lazy<Task<List<string>>>(InitializeSiteIdList);
+            _siteList = new Lazy<Task<List<Site>>>(InitializeSiteList);
             _authToken = new Lazy<Task<string>>(Authorize);
         }
 
-        public ConcurrentQueue<string> GetSiteIdQueue()
+        public ConcurrentQueue<Site> GetSiteQueue()
         {
-            var list = Shuffle(_siteIdList.Value.Result);
-            return new ConcurrentQueue<string>(list);
+            var list = Shuffle(_siteList.Value.Result);
+            return new ConcurrentQueue<Site>(list);
         }
 
         private static readonly Random Rng = new Random();
@@ -52,14 +52,14 @@ namespace DataPointBatchClient.Utility
             return list;
         }
 
-        private async Task<List<string>> InitializeSiteIdList()
+        private async Task<List<Site>> InitializeSiteList()
         {
             var slug = ConfigurationManager.AppSettings["GroupName"];
             var request = new RestRequest($"api/sites/{slug}");
             request.AddHeader("Authorization", await GetAuthToken());
             var result = await Client.ExecuteTaskAsync<List<Site>>(request);
             if (result == null) throw new NullReferenceException("Empty SiteId list");
-            return (from site in result.Data select site.Id).ToList();
+            return (from site in result.Data select site).ToList();
         }
 
         public Task<string> GetAuthToken()

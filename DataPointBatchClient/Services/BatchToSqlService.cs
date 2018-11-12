@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DataPointBatchClient.Models;
 using DataPointBatchClient.Repositories;
 using DataPointBatchClient.Utility;
 
@@ -10,14 +12,16 @@ namespace DataPointBatchClient.Services
     public class BatchToSqlService
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly Site _site;
         private readonly string _siteId;
         private readonly CancellationToken _token;
         private readonly BatchApiUtility _batchApiUtility;
         private readonly SettingsService _settingsService;
 
-        public BatchToSqlService(string siteId, CancellationToken token, BatchApiUtility batchApiUtility = null, SettingsService settingsService = null)
+        public BatchToSqlService(Site site, CancellationToken token, BatchApiUtility batchApiUtility = null, SettingsService settingsService = null)
         {
-            _siteId = siteId;
+            _site = site;
+            _siteId = site.Id;
             _token = token;
             _batchApiUtility = batchApiUtility ?? new BatchApiUtility();
             _settingsService = settingsService ?? new SettingsService(new SettingsRepository());
@@ -31,6 +35,7 @@ namespace DataPointBatchClient.Services
         public async Task<bool> SyncPrescriptions() => await SyncEntity(new PrescriptionSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new PrescriptionDestinationRepository(_token));
         public async Task<bool> SyncReminders() => await SyncEntity(new ReminderSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new ReminderDestinationRepository(_token));
         public async Task<bool> SyncResources() => await SyncEntity(new ResourceSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new ResourceDestinationRepository(_token));
+        public async Task<bool> SyncSite() => await new SiteDestinationRepository(_token).MergeEntities(new []{_site});
         public async Task<bool> SyncTransactions() => await SyncEntity(new TransactionSourceRepository(_siteId, _token, _batchApiUtility, _settingsService), new TransactionDestinationRepository(_token));
 
         private async Task<bool> SyncEntity<T>(IBatchSourceRepository<T> sourceRepo, IBatchDestinationRepository<T> destinationRepo)

@@ -75,6 +75,7 @@
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Repositories\BatchSourceRepositories.cs" />
     <Content Include="Scripts\Create\CreateTableSettings.sql" />
+    <EmbeddedResource Include="Scripts\MergeSite.sql" />
     <EmbeddedResource Include="Scripts\MergeSettings.sql" />
     <Compile Include="Services\BatchToSqlService.cs" />
     <Compile Include="Services\SettingsService.cs" />
@@ -128,6 +129,7 @@
     <Content Include="Scripts\Create\CreateTablePrescription.sql" />
     <Content Include="Scripts\Create\CreateTableReminder.sql" />
     <Content Include="Scripts\Create\CreateTableResource.sql" />
+    <Content Include="Scripts\Create\CreateTableSite.sql" />
     <Content Include="Scripts\Create\CreateTableTransaction.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

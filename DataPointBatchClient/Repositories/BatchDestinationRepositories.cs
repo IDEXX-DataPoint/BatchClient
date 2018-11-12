@@ -51,6 +51,12 @@ namespace DataPointBatchClient.Repositories
         public ResourceDestinationRepository(CancellationToken token) : base(Path, token) { }
     }
 
+    public class SiteDestinationRepository : BatchDestinationRepository<Site>
+    {
+        private static string Path { get; } = "DataPointBatchClient.Scripts.MergeSite.sql";
+        public SiteDestinationRepository(CancellationToken token) : base(Path, token) { }
+    }
+
     public class TransactionDestinationRepository : BatchDestinationRepository<Transaction>
     {
         private static string Path { get; } = "DataPointBatchClient.Scripts.MergeTransaction.sql";

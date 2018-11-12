@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DataPointBatchClient.Models;
 using DataPointBatchClient.Services;
 using DataPointBatchClient.Utility;
 using Topshelf;
@@ -82,11 +83,11 @@ namespace DataPointBatchClient
             }
         }
 
-        private ConcurrentQueue<string> _siteQueue;
+        private ConcurrentQueue<Site> _siteQueue;
         private const int NumberOfProcesses = 5;
         private async Task SyncSites()
         {
-            _siteQueue = new BatchApiUtility().GetSiteIdQueue();
+            _siteQueue = new BatchApiUtility().GetSiteQueue();
 
             var tasks = new List<Task>();
 
@@ -104,17 +105,17 @@ namespace DataPointBatchClient
             {
                 if (TokenSource.IsCancellationRequested) return;
 
-                if (!_siteQueue.TryDequeue(out var siteId)) return;
-                Logger.Debug($"Site: {siteId} dequeued");
-                await SyncSite(siteId);
+                if (!_siteQueue.TryDequeue(out var site)) return;
+                Logger.Debug($"Site: {site.Id} dequeued");
+                await SyncSite(site);
             }
         }
 
-        private static async Task SyncSite(string siteId)
+        private static async Task SyncSite(Site site)
         {
             try
             {
-                var service = new BatchToSqlService(siteId, TokenSource.Token);
+                var service = new BatchToSqlService(site, TokenSource.Token);
                 var tasks = new[]
                 {
                     service.SyncAppointments(),
@@ -125,11 +126,12 @@ namespace DataPointBatchClient
                     service.SyncPrescriptions(),
                     service.SyncReminders(),
                     service.SyncResources(),
+                    service.SyncSite(),
                     service.SyncTransactions(),
                 };
                 await Task.WhenAll(tasks);
 
-                Logger.Info($"Site: {siteId} all tasks complete" + (tasks.Any(x => !x.Result) ? " with error(s)" : ""));
+                Logger.Info($"Site: {site.Id} all tasks complete" + (tasks.Any(x => !x.Result) ? " with error(s)" : ""));
             }
             catch (OperationCanceledException)
             {
